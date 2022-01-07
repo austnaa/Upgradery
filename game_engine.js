@@ -107,6 +107,7 @@ class GameEngine {
     };
 
     update() {
+
         // Update Entities
         this.entities.forEach(entity => entity.update(this));
 
@@ -116,6 +117,8 @@ class GameEngine {
         // Add new things
         this.entities = this.entities.concat(this.entitiesToAdd);
         this.entitiesToAdd = [];
+
+        this.camera.update();
     };
 
     loop() {

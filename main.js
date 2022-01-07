@@ -3,6 +3,7 @@ const gameEngine = new GameEngine();
 const ASSET_MANAGER = new AssetManager();
 
 ASSET_MANAGER.queueDownload("./assets/Gunner.png");
+ASSET_MANAGER.queueDownload("./assets/EnvironmentTiles.png");
 ASSET_MANAGER.queueDownload("./assets/Hammer.png");
 ASSET_MANAGER.queueDownload("./assets/Entry.png");
 ASSET_MANAGER.queueDownload("./assets/Money.png");

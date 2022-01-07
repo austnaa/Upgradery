@@ -3,8 +3,16 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Animation Demo</title>
-
+    <title>Upgradery</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Press+Start+2P">
+    <style>
+        body {
+            font-family: 'Press Start 2P', serif;
+            font-size: 24px;
+        }
+    </style>
+    <script type="text/javascript" src="./bounding_box.js"></script>
     <script type="text/javascript" src="./gunner.js"></script>
     <script type="text/javascript" src="./money.js"></script>
     <script type="text/javascript" src="./screen.js"></script>
@@ -12,6 +20,7 @@
     <script type="text/javascript" src="./hammer.js"></script>
     <script type="text/javascript" src="./entry.js"></script>
     <script type="text/javascript" src="./transporter.js"></script>
+    <script type="text/javascript" src="./floor.js"></script>
     <script type="text/javascript" src="./background.js"></script>
     <script type="text/javascript" src="./asset_manager.js"></script>
 
@@ -24,5 +33,9 @@
 </head>
 <body>
     <canvas id="gameWorld" width="960" height="960" style="background: white; border: 1px solid black"></canvas>
+    <div>
+        <br />
+        <input type="checkbox" id="debug" checked=trued> Debug <input type="checkbox" id="mute"> Mute <input type="range" id="volume" min="0" max="1" value="0.1" step="0.05"> Volume
+    </div>
 </body>
 </html>
