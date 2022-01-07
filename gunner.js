@@ -1,17 +1,26 @@
 class Gunner {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y});
-
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/Gunner.png");
+        
+        this.jumpLevel = 3;  // which upgrade level the jump is on
+        this.speedLevel = 3; // which upgrade level the walk speed is on
+
+        // how many times we can apply upward 
+        // force after initially jumping
+        // used to allow for higher jumps when the up continues to be pressed
+        this.upPower = 100; 
         
         this.velocityX = 0;
         this.velocityY = 0;
 
         this.facing = 1; // 0: right, 1: left,
-        this.state = 0;  // 0: idle,  1: run,  2: jump
-        this.dead = false;
+        this.state = 0;  // 0: idle,  1: run,  2: jump, 3: dead
 
+        this.addAnimations();
+    };
 
+    addAnimations() {
         this.animations = [];
         for (let i = 0; i < 4; i++) { // idle: 0, running: 1, jumping: 2, dying: 3
             this.animations.push([]);
@@ -35,30 +44,40 @@ class Gunner {
         // die
         this.animations[3][0] = new Animator(this.spritesheet, 0, 48*7, 48, 48, 8, 0.2, 0, false, true); // die left
         this.animations[3][1] = new Animator(this.spritesheet, 0, 48*3, 48, 48, 8, 0.2, 0, false, true); // die right
-        
-    };
+    }
 
     update() {
 // print("x: " + this.x);
 // print("y: " + this.y);
 
         const TICK = this.game.clockTick;
-        const WALK_SPEED = 100;
-        const JUMP_INITIAL_VELOCITY = -300; 
+        const WALK_SPEED = [0, 25, 50, 100][this.speedLevel];
+        const JUMP_INITIAL_VELOCITY = [0, -100, -200, -250][this.jumpLevel]; 
         const GRAVITY = 20;
-         
-        if (this.dead) {
-            // todo: handle death
+
+        if (this.state == 3) {
+            // todo: handle death?
         } else {
 
             if (this.state == 2) { // gunner is currently jumping (air functionality)
-                // determine if the player should still be jumping
-                if (this.y > PARAMS.BLOCKWIDTH * 3) {
+                
+                if (this.y > PARAMS.BLOCKWIDTH * 3) { 
+                    // determine if the player should still be jumping
+                    // this may no longer be needed once collision is implemented
                     this.y == 0;
                     this.velocityY = 0;
                     this.state = 0;
+                    this.upPower = 100;
                 } else {
                     this.velocityY += GRAVITY;
+                    
+                    // adds to the upwards velocity if the UP is pressed
+                    // (will run out eventually) 
+                    if (this.game.up() && this.upPower > 0 && this.velocityY < 0) {
+                        // add to the upwards velocity if allowed
+                        this.velocityY += -10;
+                        this.upPower -= 1;
+                    }
                 }
 
                 // direction the gunner is looking in air 
@@ -74,15 +93,12 @@ class Gunner {
             } 
             else { // the gunner is not jumping (ground functionality)
                 
-                
                 if (this.game.left()) {
-                    print("left");
                     this.state = 1;
                     this.facing = 0;
                     this.velocityX = -WALK_SPEED;
                 }
                 else if (this.game.right()) {
-                    print("right");
                     this.state = 1;
                     this.facing = 1;
                     this.velocityX = WALK_SPEED;
@@ -95,7 +111,9 @@ class Gunner {
                 if (this.game.up()) {
                     this.state = 2;
                     this.velocityY = JUMP_INITIAL_VELOCITY;
+                    
                 }
+
             }
 
             // if (this.game.shoot()) {
@@ -106,11 +124,7 @@ class Gunner {
         this.x += this.velocityX * TICK * PARAMS.SCALE;
         this.y += this.velocityY * TICK * PARAMS.SCALE;
 
-
-
-
-
-
+        // todo: collisions
     };
 
     drawMinimap(ctx, mmX, mmY) {
@@ -121,23 +135,6 @@ class Gunner {
     draw(ctx) {
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, PARAMS.SCALE);
-
-
-        // // idle
-        // this.animations[0][0].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, PARAMS.SCALE);
-        // this.animations[0][1].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x + PARAMS.BLOCKWIDTH, this.y, PARAMS.SCALE);
-
-        // // run
-        // this.animations[1][0].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y + PARAMS.BLOCKWIDTH, PARAMS.SCALE);
-        // this.animations[1][1].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x + PARAMS.BLOCKWIDTH, this.y + PARAMS.BLOCKWIDTH, PARAMS.SCALE);
-
-        // // jump
-        // this.animations[2][0].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y + (PARAMS.BLOCKWIDTH * 2), PARAMS.SCALE);
-        // this.animations[2][1].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x + PARAMS.BLOCKWIDTH, this.y + (PARAMS.BLOCKWIDTH * 2), PARAMS.SCALE);
-        
-        // // die
-        // this.animations[3][0].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y + (PARAMS.BLOCKWIDTH * 3), PARAMS.SCALE);
-        // this.animations[3][1].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x + PARAMS.BLOCKWIDTH, this.y + (PARAMS.BLOCKWIDTH * 3), PARAMS.SCALE);
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = 'Red';
