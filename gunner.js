@@ -52,6 +52,7 @@ class Gunner {
 
     updateBB() {
         this.lastBB = this.BB;
+        this.lastLandingBB = this.landingBB;
         let leftXOffset = this.facing ? 18 : 12;
         this.BB = new BoundingBox(this.x + leftXOffset * PARAMS.SCALE, this.y + this.BB_TOP_MARGIN, PARAMS.BLOCKWIDTH - 6 * PARAMS.SCALE, PARAMS.BLOCKWIDTH * 1.03); 
     };
@@ -111,6 +112,7 @@ class Gunner {
                 
                 // start a jump if the gunner is not in freefall
                 if (this.game.up() && this.velocityY == 0) {
+                    print("here")
                     this.state = 2;
                     this.velocityY = JUMP_INITIAL_VELOCITY;
                     
@@ -134,10 +136,10 @@ class Gunner {
         let that = this;
         this.game.entities.forEach(function (entity) {
             if (entity.BB && that.BB.collide(entity.BB) && entity != that) {
-                print(that.lastBB.bottom <= entity.BB.top)
-                
-                // sprite above
-                if (entity instanceof Floor && that.BB.collide(entity.topBB) && !that.BB.collide(entity.bottomBB)) {
+
+                // moving down
+                if (that.velocityY > 0 && entity instanceof Block && that.BB.collide(entity.topBB) && !that.BB.collide(entity.bottomBB)) {
+                    print("above")
                     that.y = Math.floor(entity.BB.top - (that.BB_TOP_MARGIN + PARAMS.BLOCKWIDTH * 1.03));
                     that.velocityY = 0;
                     
@@ -147,30 +149,89 @@ class Gunner {
                     that.updateBB();
                 }
 
-                // sprite below
-                if (entity instanceof Floor && that.BB.collide(entity.bottomBB) && !that.BB.collide(entity.topBB)) {
-                    that.y = Math.floor(entity.BB.bottom + that.BB_TOP_MARGIN);
+                // moving up
+                if (that.velocityY < 0 && entity instanceof Block && that.BB.collide(entity.bottomBB) && !that.BB.collide(entity.topBB)) {
+                        
+                    print("below")
+                    that.y = Math.floor(entity.BB.bottom - that.BB_TOP_MARGIN);
                     that.velocityY = 0;
                     that.updateBB();
                 }
-                
+
                 // sprite to the right or left    
-                if (entity instanceof Floor && that.BB.collide(entity.topBB) && that.BB.collide(entity.bottomBB)) {
+                if (that.velocityX != 0 && entity instanceof Block && that.BB.collide(entity.topBB) && that.BB.collide(entity.bottomBB)) {
                     // to right
-                    if (that.lastBB.left >= entity.BB.right) {
-                        print("to right")
+                    if (that.lastBB.left <= entity.BB.right && that.lastBB.right >= entity.BB.right) {
+                        print("to right") 
+                        // movedHorizontally = true;
+                        
                         let leftXOffset = that.facing ? 18 : 12;
                         that.x = entity.BB.right - leftXOffset * PARAMS.SCALE;
                         that.velocityX = 0;
-                        
+                        that.updateBB();        
                     } 
                     // to left 
-                    else {
-                        that.x = entity.BB.left - (that.BB_TOP_MARGIN+ PARAMS.BLOCKWIDTH * 1.07);
+                    else if (that.lastBB.right >= entity.BB.left && that.lastBB.left <= entity.BB.left) {
+                        print("to left")
+                        
+                        let leftXOffset = that.facing ? 18 : 12;
+                        that.x = entity.BB.left - (PARAMS.BITWIDTH * PARAMS.SCALE * 1.5) + ((PARAMS.BITWIDTH * PARAMS.SCALE * 1.5) - (leftXOffset * PARAMS.SCALE) - (PARAMS.BLOCKWIDTH - 6 * PARAMS.SCALE));
+                
                         that.velocityX = 0;
+                        that.updateBB();        
                     }
-                    that.updateBB();        
-                }                
+        
+                }       
+                
+                
+                // // moving down
+                // if (that.velocityY > 0 && entity instanceof Block && that.BB.collide(entity.topBB) && !that.BB.collide(entity.bottomBB)) {
+                //     print("above")
+                //     that.y = Math.floor(entity.BB.top - (that.BB_TOP_MARGIN + PARAMS.BLOCKWIDTH * 1.03));
+                //     that.velocityY = 0;
+                    
+                //     if (that.state == 2) {
+                //         that.state = 0;
+                //     }
+                //     that.updateBB();
+                // }
+
+                // // moving up
+                // if (that.velocityY < 0 && entity instanceof Block && that.BB.collide(entity.bottomBB) && !that.BB.collide(entity.topBB)) {
+                        
+                //     print("below")
+                //     that.y = Math.floor(entity.BB.bottom - that.BB_TOP_MARGIN);
+                //     that.velocityY = 0;
+                //     that.updateBB();
+                // }
+
+                // // sprite to the right or left    
+                // if (entity instanceof Block && that.BB.collide(entity.topBB) || that.BB.collide(entity.bottomBB)) {
+                //     // to right
+                //     if (that.lastBB.left <= entity.BB.right && that.lastBB.right >= entity.BB.right) {
+                //         print("to right") 
+                //         // movedHorizontally = true;
+                        
+                //         let leftXOffset = that.facing ? 18 : 12;
+                //         that.x = entity.BB.right - leftXOffset * PARAMS.SCALE;
+                //         that.velocityX = 0;
+                //         that.updateBB();        
+                //     } 
+                //     // to left 
+                //     else if (that.lastBB.right >= entity.BB.left && that.lastBB.left <= entity.BB.left) {
+                //         print("to left")
+                        
+                //         let leftXOffset = that.facing ? 18 : 12;
+                //         that.x = entity.BB.left - (PARAMS.BITWIDTH * PARAMS.SCALE * 1.5) + ((PARAMS.BITWIDTH * PARAMS.SCALE * 1.5) - (leftXOffset * PARAMS.SCALE) - (PARAMS.BLOCKWIDTH - 6 * PARAMS.SCALE));
+                
+                //         that.velocityX = 0;
+                //         that.updateBB();        
+                //     }
+        
+                // }        
+                
+                
+        
             }
         });
     };
