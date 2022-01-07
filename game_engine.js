@@ -124,6 +124,24 @@ class GameEngine {
         this.draw();
     };
 
+    // added code below
+    up() {
+        return this.keys['ArrowUp'] || this.keys['w'] || this.keys['W'];
+    }
+
+    left() {
+        return this.keys['ArrowLeft'] || this.keys['a'] || this.keys['A'];
+    }
+
+    right() {
+        return this.keys['ArrowRight'] || this.keys['d'] || this.keys['D'];
+    }
+
+    shoot() {
+        return this.keys[' '];
+    }
+    // added code above
+
     get["deltaTime"]() { return this.clockTick; }
     get["width"]() { return this.ctx?.canvas?.width || 0; }
     get["height"]() { return this.ctx?.canvas?.height || 0; }
