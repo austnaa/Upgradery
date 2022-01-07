@@ -2,6 +2,8 @@ class Gunner {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/Gunner.png");
+
+        this.cash = 0;
         
         this.jumpLevel = 3;  // which upgrade level the jump is on
         this.speedLevel = 3; // which upgrade level the walk speed is on
@@ -56,6 +58,11 @@ class Gunner {
         let leftXOffset = this.facing ? 18 : 12;
         this.BB = new BoundingBox(this.x + leftXOffset * PARAMS.SCALE, this.y + this.BB_TOP_MARGIN, PARAMS.BLOCKWIDTH - 6 * PARAMS.SCALE, PARAMS.BLOCKWIDTH * 1.03); 
     };
+
+    collectCash() {
+        this.cash++;
+        ASSET_MANAGER.playAsset("./assets/audio/CoinCollect.wav");
+    }
 
     update() {
 // print("x: " + this.x);
@@ -115,6 +122,7 @@ class Gunner {
                     print("here")
                     this.state = 2;
                     this.velocityY = JUMP_INITIAL_VELOCITY;
+                    ASSET_MANAGER.playAsset("./assets/audio/Jump.wav");
                     
                 }
 
@@ -136,6 +144,11 @@ class Gunner {
         let that = this;
         this.game.entities.forEach(function (entity) {
             if (entity.BB && that.BB.collide(entity.BB) && entity != that) {
+
+                if (entity instanceof Money) {
+                     entity.removeFromWorld = true;
+                     that.collectCash();
+                }
 
                 // moving down
                 if (that.velocityY > 0 && entity instanceof Block && that.BB.collide(entity.topBB) && !that.BB.collide(entity.bottomBB)) {
@@ -183,57 +196,10 @@ class Gunner {
         
                 }       
                 
-                
-                // // moving down
-                // if (that.velocityY > 0 && entity instanceof Block && that.BB.collide(entity.topBB) && !that.BB.collide(entity.bottomBB)) {
-                //     print("above")
-                //     that.y = Math.floor(entity.BB.top - (that.BB_TOP_MARGIN + PARAMS.BLOCKWIDTH * 1.03));
-                //     that.velocityY = 0;
-                    
-                //     if (that.state == 2) {
-                //         that.state = 0;
-                //     }
-                //     that.updateBB();
-                // }
-
-                // // moving up
-                // if (that.velocityY < 0 && entity instanceof Block && that.BB.collide(entity.bottomBB) && !that.BB.collide(entity.topBB)) {
-                        
-                //     print("below")
-                //     that.y = Math.floor(entity.BB.bottom - that.BB_TOP_MARGIN);
-                //     that.velocityY = 0;
-                //     that.updateBB();
-                // }
-
-                // // sprite to the right or left    
-                // if (entity instanceof Block && that.BB.collide(entity.topBB) || that.BB.collide(entity.bottomBB)) {
-                //     // to right
-                //     if (that.lastBB.left <= entity.BB.right && that.lastBB.right >= entity.BB.right) {
-                //         print("to right") 
-                //         // movedHorizontally = true;
-                        
-                //         let leftXOffset = that.facing ? 18 : 12;
-                //         that.x = entity.BB.right - leftXOffset * PARAMS.SCALE;
-                //         that.velocityX = 0;
-                //         that.updateBB();        
-                //     } 
-                //     // to left 
-                //     else if (that.lastBB.right >= entity.BB.left && that.lastBB.left <= entity.BB.left) {
-                //         print("to left")
-                        
-                //         let leftXOffset = that.facing ? 18 : 12;
-                //         that.x = entity.BB.left - (PARAMS.BITWIDTH * PARAMS.SCALE * 1.5) + ((PARAMS.BITWIDTH * PARAMS.SCALE * 1.5) - (leftXOffset * PARAMS.SCALE) - (PARAMS.BLOCKWIDTH - 6 * PARAMS.SCALE));
-                
-                //         that.velocityX = 0;
-                //         that.updateBB();        
-                //     }
-        
-                // }        
-                
-                
-        
             }
         });
+
+
     };
 
     drawMinimap(ctx, mmX, mmY) {

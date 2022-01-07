@@ -2,6 +2,14 @@ const gameEngine = new GameEngine();
 
 const ASSET_MANAGER = new AssetManager();
 
+// audio
+ASSET_MANAGER.queueDownload("./assets/audio/CoinCollect.wav");
+ASSET_MANAGER.queueDownload("./assets/audio/Jump.wav");
+ASSET_MANAGER.queueDownload("./assets/audio/Upgrade.wav");
+ASSET_MANAGER.queueDownload("./assets/audio/CoinUpgrade.wav");
+
+
+// visuals
 ASSET_MANAGER.queueDownload("./assets/Gunner.png");
 ASSET_MANAGER.queueDownload("./assets/EnvironmentTiles.png");
 ASSET_MANAGER.queueDownload("./assets/Hammer.png");

@@ -4,6 +4,8 @@ class Money {
 
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/Money.png");
         this.animation = new Animator(this.spritesheet, 0, 0, 24, 24, 6, 0.2, 0, false, true); 
+
+        this.BB = new BoundingBox(this.x + 4, this.y + 4, 16 * PARAMS.SCALE, 16 * PARAMS.SCALE); 
     };
 
     update() {
