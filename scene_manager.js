@@ -3,13 +3,17 @@ class SceneManager {
         this.game = game;
         this.game.camera = this;
         this.x = 0;
+        this.y = 0;
 
+        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH);
+        
         this.loadLevel();
     };
 
     // add the entities for animation (basic)
     loadLevel() {
-        // this.game.addEntity(new Screen(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 3.25, 0));
+        
+        // this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.15, 0));
         // this.game.addEntity(new RoofScreen(this.game, 3.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 3.25, 0));
         // this.game.addEntity(new Transporter(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2, 0));
         // this.game.addEntity(new Transporter(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.5, 1));
@@ -17,8 +21,9 @@ class SceneManager {
         // this.game.addEntity(new Hammer(this.game, 3 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH / 4));
         // this.game.addEntity(new Money(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH / 4));
 
-
-        this.game.addEntity(new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH));
+        this.game.addEntity(this.game.gunner);
+        
+        this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 1.7, 0));
 
 
         this.game.addEntity(new Money(this.game, 2.25 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
@@ -98,6 +103,36 @@ class SceneManager {
     update() {
         PARAMS.DEBUG = document.getElementById("debug").checked;
         this.updateAudio();
+
+        // camera settings
+        let midpointW = PARAMS.CANVAS_WIDTH / 2 - PARAMS.BLOCKWIDTH / 2;
+
+        print(midpointW);
+        
+
+
+      
+
+        // set the left and right bounds on the camera
+        this.x = this.game.gunner.x - midpointW;
+        this.x = Math.max(0, this.x);
+        this.x = Math.min(400, this.x); // todo: will need a bound for the right of the map...
+
+        // updates the y value only if the gunner is not jumping
+        if (this.game.gunner.state != 2) {
+
+        }
+
+        this.y = this.game.gunner.y  - midpointW;
+        this.y = Math.max(0, this.y);
+        // todo: will need a bound for the bottom of the map...
+
+
+// print("camera: ") 
+// print({x: this.x, y: this.y})
+
+        
+        
     };
 
 }

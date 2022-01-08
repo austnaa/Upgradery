@@ -2,7 +2,7 @@ class Entry {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y});
 
-        this.spritesheet = ASSET_MANAGER.getAsset("./assets/Entry.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./assets/visuals/Entry.png");
         this.animation = new Animator(this.spritesheet, 0, 0, 32, 64, 8, 0.15, 0, false, true); 
     };
 

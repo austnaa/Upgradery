@@ -1,7 +1,7 @@
 class Gunner {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./assets/Gunner.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./assets/visuals/Gunner.png");
 
         this.cash = 0;
         
@@ -65,8 +65,8 @@ class Gunner {
     }
 
     update() {
-// print("x: " + this.x);
-// print("y: " + this.y);
+// print("gunner ");
+// print({x: this.x, y: this.y});
 
         const TICK = this.game.clockTick;
         const WALK_SPEED = [0, 25, 50, 100][this.speedLevel];
@@ -119,7 +119,7 @@ class Gunner {
                 
                 // start a jump if the gunner is not in freefall
                 if (this.game.up() && this.velocityY == 0) {
-                    print("here")
+// print("here")
                     this.state = 2;
                     this.velocityY = JUMP_INITIAL_VELOCITY;
                     ASSET_MANAGER.playAsset("./assets/audio/Jump.wav");
@@ -152,7 +152,7 @@ class Gunner {
 
                 // moving down
                 if (that.velocityY > 0 && entity instanceof Block && that.BB.collide(entity.topBB) && !that.BB.collide(entity.bottomBB)) {
-                    print("above")
+// print("above")
                     that.y = Math.floor(entity.BB.top - (that.BB_TOP_MARGIN + PARAMS.BLOCKWIDTH * 1.03));
                     that.velocityY = 0;
                     
@@ -165,7 +165,7 @@ class Gunner {
                 // moving up
                 if (that.velocityY < 0 && entity instanceof Block && that.BB.collide(entity.bottomBB) && !that.BB.collide(entity.topBB)) {
                         
-                    print("below")
+// print("below")
                     that.y = Math.floor(entity.BB.bottom - that.BB_TOP_MARGIN);
                     that.velocityY = 0;
                     that.updateBB();
@@ -175,7 +175,7 @@ class Gunner {
                 if (that.velocityX != 0 && entity instanceof Block && that.BB.collide(entity.topBB) && that.BB.collide(entity.bottomBB)) {
                     // to right
                     if (that.lastBB.left <= entity.BB.right && that.lastBB.right >= entity.BB.right) {
-                        print("to right") 
+// print("to right") 
                         // movedHorizontally = true;
                         
                         let leftXOffset = that.facing ? 18 : 12;
@@ -185,7 +185,7 @@ class Gunner {
                     } 
                     // to left 
                     else if (that.lastBB.right >= entity.BB.left && that.lastBB.left <= entity.BB.left) {
-                        print("to left")
+// print("to left")
                         
                         let leftXOffset = that.facing ? 18 : 12;
                         that.x = entity.BB.left - (PARAMS.BITWIDTH * PARAMS.SCALE * 1.5) + ((PARAMS.BITWIDTH * PARAMS.SCALE * 1.5) - (leftXOffset * PARAMS.SCALE) - (PARAMS.BLOCKWIDTH - 6 * PARAMS.SCALE));
@@ -209,11 +209,11 @@ class Gunner {
 
     draw(ctx) {
 
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, PARAMS.SCALE * 1.5);
+        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, PARAMS.SCALE * 1.5);
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         }
     };
 };

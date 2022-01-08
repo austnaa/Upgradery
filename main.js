@@ -10,17 +10,17 @@ ASSET_MANAGER.queueDownload("./assets/audio/CoinUpgrade.wav");
 
 
 // visuals
-ASSET_MANAGER.queueDownload("./assets/Gunner.png");
-ASSET_MANAGER.queueDownload("./assets/EnvironmentTiles.png");
-ASSET_MANAGER.queueDownload("./assets/Hammer.png");
-ASSET_MANAGER.queueDownload("./assets/Entry.png");
-ASSET_MANAGER.queueDownload("./assets/Money.png");
-ASSET_MANAGER.queueDownload("./assets/RoofScreen.png");
-ASSET_MANAGER.queueDownload("./assets/Screen.png");
-ASSET_MANAGER.queueDownload("./assets/Transporter.png");
-ASSET_MANAGER.queueDownload("./assets/Shadow.png");
-ASSET_MANAGER.queueDownload("./assets/MuzzleFlash.png");
-ASSET_MANAGER.queueDownload("./assets/Background.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/Gunner.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/EnvironmentTiles.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/Hammer.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/Entry.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/Money.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/RoofScreen.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/Screen.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/Transporter.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/Shadow.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/MuzzleFlash.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/Background.png");
 
 ASSET_MANAGER.downloadAll(() => {
 	var gameEngine = new GameEngine();

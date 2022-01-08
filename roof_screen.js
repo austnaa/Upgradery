@@ -2,7 +2,7 @@ class RoofScreen {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y});
 
-        this.spritesheet = ASSET_MANAGER.getAsset("./assets/RoofScreen.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./assets/visuals/RoofScreen.png");
         this.animation = new Animator(this.spritesheet, 0, 0, 32, 32, 4, 0.15, 0, false, true); 
     };
 

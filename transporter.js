@@ -2,7 +2,7 @@ class Transporter {
     constructor(game, x, y, size) {
         Object.assign(this, { game, x, y});
 
-        this.spritesheet = ASSET_MANAGER.getAsset("./assets/Transporter.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./assets/visuals/Transporter.png");
         
         this.animationArr = [];
         this.animationArr.push(new Animator(this.spritesheet, 0, 0, 32, 16, 4, 0.1, 0, false, true));
