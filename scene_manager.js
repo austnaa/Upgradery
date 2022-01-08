@@ -7,12 +7,29 @@ class SceneManager {
 
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH);
         
-        this.loadLevel();
+        // this.loadLevel();
+        this.loadTitleScreen();
     };
 
-    // add the entities for animation (basic)
-    loadLevel() {
-        
+    clearEntities() {
+        this.game.entities.forEach(function (entity) {
+            entity.removeFromWorld = true;
+        });
+    };
+
+    loadTitleScreen() {
+        this.game.addEntity(new TitleScreen(this.game));
+        this.game.addEntity(new Background(this.game, 0, 0));
+    }
+
+    play() {
+        this.clearEntities();
+        this.loadMainLevel();
+    }
+
+    
+    loadMainLevel() {
+
         // this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.15, 0));
         // this.game.addEntity(new RoofScreen(this.game, 3.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 3.25, 0));
         // this.game.addEntity(new Transporter(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2, 0));
@@ -25,16 +42,16 @@ class SceneManager {
         
         this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 1.7, 0));
 
-
+        // near start
         this.game.addEntity(new Money(this.game, 2.25 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
         this.game.addEntity(new Money(this.game, 2.75 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
         this.game.addEntity(new Money(this.game, 3.25 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
         this.game.addEntity(new Money(this.game, 3.75 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
-
         this.game.addEntity(new Money(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
         this.game.addEntity(new Money(this.game, 3 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
         this.game.addEntity(new Money(this.game, 3.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
 
+        // row 0
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 0, 0, 3, 2, 1, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 0, 0, 3, 2, 1, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 0, 0, 3, 2, 1, true));
@@ -43,7 +60,7 @@ class SceneManager {
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 0, 0, 3, 2, 1, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 0, 0, 3, 2, 1, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 0, 0, 3, 2, 1), true);
-        
+        // row 3
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true));
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true));
@@ -51,9 +68,8 @@ class SceneManager {
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 2, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true)); 
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 2, true)); 
-        
-
+        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 2, true));   
+        // row 4
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1, false)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1), false);
@@ -62,28 +78,24 @@ class SceneManager {
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1, false)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 2), false);
-
-
-
+        // row 5
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 1, false)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 1), false);
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 1), false); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 2, true)); 
+        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 6, PARAMS.BLOCKWIDTH * 5, 0, 3, 0, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 1, false)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 2), false);
-
+        // row 6
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 1, false)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 1), false);
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 1), false); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 6, 0, 6, 1, 0, true));
-        
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 5, PARAMS.BLOCKWIDTH * 6, 0, 3, 0, 1, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 6, PARAMS.BLOCKWIDTH * 6, 0, 6, 1, 1, true)); 
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 6, PARAMS.BLOCKWIDTH * 5, 0, 3, 0, 0, true)); 
-
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 1, false)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 2), false);
@@ -106,12 +118,6 @@ class SceneManager {
 
         // camera settings
         let midpointW = PARAMS.CANVAS_WIDTH / 2 - PARAMS.BLOCKWIDTH / 2;
-
-        print(midpointW);
-        
-
-
-      
 
         // set the left and right bounds on the camera
         this.x = this.game.gunner.x - midpointW;
