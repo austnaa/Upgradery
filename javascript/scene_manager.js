@@ -5,11 +5,18 @@ class SceneManager {
         this.x = 0;
         this.y = 0;
         this.playing = false; // should be the main level is running
+        
+        this.game.speedLevel = 0;
+        this.game.jumpLevel = 0;
+        this.game.timeLevel = 0;
+        this.game.ammoLevel = 0;
+        this.game.shootSpeedLevel = 0;
+        this.game.multiplierLevel = 0;
 
         // this.game.MAX_LIVES = 5;
         this.game.lives = 1; // the number of lives available at the start of the level
         
-        this.game.cash = 0;
+        this.game.cash = 100;
        
         this.TIME = [10];
         this.game.timeRemaining = this.TIME[0];
