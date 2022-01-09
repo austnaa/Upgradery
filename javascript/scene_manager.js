@@ -6,8 +6,16 @@ class SceneManager {
         this.y = 0;
         this.playing = false; // should be the main level is running
         
+        this.game.MAX_SPEED_LEVEL = 10;
+        this.game.MAX_JUMP_LEVEL = 10;
+        this.game.MAX_HEALTH_LEVEL = 5;
+        this.game.MAX_TIME_LEVEL = 10;
+        this.game.MAX_AMMO_LEVEL = 10;
+        this.game.MAX_SHOOT_SPEED_LEVEL = 10;
+        this.game.MAX_MULTIPLIER_LEVEL = 4;
         this.game.speedLevel = 0;
         this.game.jumpLevel = 0;
+        this.game.healthLevel = 0;
         this.game.timeLevel = 0;
         this.game.ammoLevel = 0;
         this.game.shootSpeedLevel = 0;
@@ -16,9 +24,9 @@ class SceneManager {
         // this.game.MAX_LIVES = 5;
         this.game.lives = 1; // the number of lives available at the start of the level
         
-        this.game.cash = 100;
+        this.game.cash = 1000; // the initial cash amount
        
-        this.TIME = [10];
+        this.TIME = [3, 10];
         this.game.timeRemaining = this.TIME[0];
         
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH);
@@ -51,7 +59,7 @@ class SceneManager {
     }
     
     loadMainLevel() {
-        
+        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH);
         this.game.addEntity(this.game.gunner);
 
         this.game.addEntity(new Hud(this.game));

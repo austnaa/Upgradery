@@ -22,7 +22,7 @@ class Hud {
         this.cashAnimation.drawFrame(this.game.clockTick, ctx, PARAMS.BLOCKWIDTH * .1, PARAMS.BLOCKWIDTH * 0.1, PARAMS.SCALE * 1.6);
 
         // time remaining
-        ctx.fillText("" + floor(this.game.timeRemaining), 4.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 0.6);
+        ctx.fillText("" + floor(this.game.timeRemaining), 5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 0.6);
 
         // lives
         for (let i = 0; i < this.game.lives; i++) {

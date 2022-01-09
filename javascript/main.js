@@ -7,6 +7,7 @@ ASSET_MANAGER.queueDownload("./assets/audio/CoinCollect.wav");
 ASSET_MANAGER.queueDownload("./assets/audio/Jump.wav");
 ASSET_MANAGER.queueDownload("./assets/audio/Upgrade.wav");
 ASSET_MANAGER.queueDownload("./assets/audio/CoinUpgrade.wav");
+ASSET_MANAGER.queueDownload("./assets/audio/MaxLevelUpgrade.wav");
 
 
 // visuals

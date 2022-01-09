@@ -3,8 +3,8 @@ class Gunner {
         Object.assign(this, { game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/visuals/Gunner.png");
         
-        this.jumpLevel = 3;  // which upgrade level the jump is on
-        this.speedLevel = 3; // which upgrade level the walk speed is on
+        // this.jumpLevel = 3;  // which upgrade level the jump is on
+        // this.speedLevel = 3; // which upgrade level the walk speed is on
         
         this.velocityX = 0;
         this.velocityY = 0;
@@ -63,8 +63,8 @@ class Gunner {
 // print({x: this.x, y: this.y});
 
         const TICK = this.game.clockTick;
-        const WALK_SPEED = [0, 25, 50, 100][this.speedLevel];
-        const JUMP_INITIAL_VELOCITY = [0, -100, -200, -350][this.jumpLevel]; 
+        const WALK_SPEED = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100][this.game.speedLevel];
+        const JUMP_INITIAL_VELOCITY = [0, -100, -200, -350][this.game.jumpLevel]; 
         const GRAVITY = 20;
 
         if (this.state == 3) {
