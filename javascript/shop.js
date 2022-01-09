@@ -237,6 +237,7 @@ class Shop {
     }
 
     draw(ctx) {  
+        
         this.speedCost = this.SPEED_COSTS[this.game.speedLevel];
         this.jumpCost = this.JUMP_COSTS[this.game.jumpLevel];
         this.timeCost = this.TIME_COSTS[this.game.timeLevel];
@@ -252,7 +253,7 @@ class Shop {
 
         this.setDefaultFillAndStroke(ctx);
         ctx.lineWidth = 10;
-         
+        
         // SHOP title
         let shopFontSize = 96;
         ctx.font = shopFontSize + 'px "silkscreenbold"';
@@ -262,10 +263,14 @@ class Shop {
         this.cashOffset = (("" + this.game.cash).length - 1) * this.CASH_TEXT_WIDTH;
         this.cashTextX = this.CASH_TEXT_X - this.cashOffset;
         this.cashAnimX = this.CASH_ANIM_X - this.cashOffset;
+
         
         this.setMediumFont(ctx);
         ctx.fillText("" + this.game.cash, this.cashTextX, this.CASH_TEXT_Y);
         this.cashAnimation.drawFrame(this.game.clockTick, ctx, this.cashAnimX, this.CASH_ANIM_Y, PARAMS.SCALE * 1.5); 
+
+        this.setDefaultFillAndStroke(ctx); // R
+
         
     // SPEED
         if (this.mouseBB.collide(this.speedBB)) { // first, check for hovering over
@@ -338,6 +343,28 @@ class Shop {
 
         this.setDefaultFillAndStroke(ctx);
 
+    // HEALTH
+        if (this.mouseBB.collide(this.healthBB)) {
+            this.setStrokeAndFillGreen(ctx);
+        }
+        if (this.healthCost > this.game.cash) {
+            this.setStrokeAndFillDark(ctx);
+        }
+        if (this.game.healthLevel == this.game.MAX_HEALTH_LEVEL) {
+            this.setStrokeAndFillMaxLevel(ctx);
+        }
+        this.setLargeFont(ctx);
+        ctx.fillText("HEALTH", this.TEXT_X, this.HEALTH_TEXT_Y);
+        this.setSmallFont(ctx);
+        ctx.fillText("Increase health", this.TEXT_X + 300, this.HEALTH_TEXT_Y);
+        ctx.fillText(this.formatLevel(this.game.healthLevel, this.game.MAX_HEALTH_LEVEL), this.TEXT_X + this.LEVEL_OFFSET_X, this.HEALTH_TEXT_Y + this.LEVEL_OFFSET_Y);
+        this.setMediumFont(ctx);
+        costText = this.game.healthLevel == this.game.MAX_HEALTH_LEVEL ? "MAX " : "$" + this.healthCost;
+        ctx.fillText(costText, this.TEXT_X + this.COST_OFFSET_X - ("" + costText).length * this.CASH_TEXT_WIDTH, this.HEALTH_TEXT_Y - this.COST_OFFSET_Y);
+        ctx.strokeRect(this.BOX_X, this.HEALTH_BOX_Y, this.BOX_WIDTH, this.BOX_HEIGHT);
+
+        this.setDefaultFillAndStroke(ctx);
+
     // AMMO
         if (this.mouseBB.collide(this.ammoBB)) {
             this.setStrokeAndFillGreen(ctx);
@@ -404,25 +431,9 @@ class Shop {
 
         this.setDefaultFillAndStroke(ctx);
 
-    // HEALTH
-        if (this.mouseBB.collide(this.healthBB)) {
-            this.setStrokeAndFillGreen(ctx);
-        }
-        if (this.healthCost > this.game.cash) {
-            this.setStrokeAndFillDark(ctx);
-        }
-        if (this.game.healthLevel == this.game.MAX_HEALTH_LEVEL) {
-            this.setStrokeAndFillMaxLevel(ctx);
-        }
-        this.setLargeFont(ctx);
-        ctx.fillText("HEALTH", this.TEXT_X, this.HEALTH_TEXT_Y);
-        this.setSmallFont(ctx);
-        ctx.fillText("Increase health", this.TEXT_X + 300, this.HEALTH_TEXT_Y);
-        ctx.fillText(this.formatLevel(this.game.healthLevel, this.game.MAX_HEALTH_LEVEL), this.TEXT_X + this.LEVEL_OFFSET_X, this.HEALTH_TEXT_Y + this.LEVEL_OFFSET_Y);
-        this.setMediumFont(ctx);
-        costText = this.game.healthLevel == this.game.MAX_HEALTH_LEVEL ? "MAX " : "$" + this.healthCost;
-        ctx.fillText(costText, this.TEXT_X + this.COST_OFFSET_X - ("" + costText).length * this.CASH_TEXT_WIDTH, this.HEALTH_TEXT_Y - this.COST_OFFSET_Y);
-        ctx.strokeRect(this.BOX_X, this.HEALTH_BOX_Y, this.BOX_WIDTH, this.BOX_HEIGHT);
+   
+
+        
 
         // play
         if (this.mouseBB.collide(this.playBB)) {
