@@ -2,8 +2,6 @@ class Gunner {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/visuals/Gunner.png");
-
-        this.cash = 0;
         
         this.jumpLevel = 3;  // which upgrade level the jump is on
         this.speedLevel = 3; // which upgrade level the walk speed is on
@@ -59,11 +57,7 @@ class Gunner {
         this.BB = new BoundingBox(this.x + leftXOffset * PARAMS.SCALE, this.y + this.BB_TOP_MARGIN, PARAMS.BLOCKWIDTH - 6 * PARAMS.SCALE, PARAMS.BLOCKWIDTH * 1.03); 
     };
 
-    collectCash() {
-        this.cash++;
-        ASSET_MANAGER.playAsset("./assets/audio/CoinCollect.wav");
-    }
-
+    
     update() {
 // print("gunner ");
 // print({x: this.x, y: this.y});
@@ -145,9 +139,9 @@ class Gunner {
         this.game.entities.forEach(function (entity) {
             if (entity.BB && that.BB.collide(entity.BB) && entity != that) {
 
-                if (entity instanceof Money) {
+                if (entity instanceof Cash) {
                      entity.removeFromWorld = true;
-                     that.collectCash();
+                     that.game.camera.collectCash();
                 }
 
                 // moving down

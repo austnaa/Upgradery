@@ -2,16 +2,13 @@ class TitleScreen {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y});
 
-        // this.spritesheet = ASSET_MANAGER.getAsset("./assets/visuals/Money.png");
-        // this.animation = new Animator(this.spritesheet, 0, 0, 24, 24, 6, 0.2, 0, false, true); 
-
         this.playBB = new BoundingBox(3.5 * PARAMS.BLOCKWIDTH, 5.4 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.7, PARAMS.BLOCKWIDTH * .8);
         this.mouseBB = new BoundingBox(0, 0, 1, 1);
     };
 
     update() {
         if (this.game.click) {
-            this.mouseBB = new BoundingBox(this.game.mouse.x, this.game.mouse.y, 1, 1);   
+            this.mouseBB = new BoundingBox(this.game.click.x, this.game.click.y, 1, 1);   
             if (this.mouseBB.collide(this.playBB)) {
                 this.game.camera.play();
             }

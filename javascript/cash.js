@@ -1,4 +1,4 @@
-class Money {
+class Cash {
     constructor(game, x, y, w) {
         Object.assign(this, { game, x, y});
 

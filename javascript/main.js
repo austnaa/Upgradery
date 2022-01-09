@@ -15,6 +15,7 @@ ASSET_MANAGER.queueDownload("./assets/visuals/EnvironmentTiles.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/Hammer.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/Entry.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/Money.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/Hearts.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/RoofScreen.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/Screen.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/Transporter.png");
