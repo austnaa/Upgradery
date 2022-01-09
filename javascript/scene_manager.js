@@ -24,7 +24,7 @@ class SceneManager {
         // this.game.MAX_LIVES = 5;
         this.game.lives = 1; // the number of lives available at the start of the level
         
-        this.game.cash = 1000; // the initial cash amount
+        this.game.cash = 200; // the initial cash amount
        
         this.TIME = [3, 10];
         this.game.timeRemaining = this.TIME[0];
