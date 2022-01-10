@@ -5,7 +5,10 @@ class SceneManager {
         this.x = 0;
         this.y = 0;
         this.playing = false; // should be the main level is running
-        
+
+        this.TIME_LEVELS = [3, 6, 12, 24, 48, 100, 150, 200, 250, 300, 350];
+        this.MULTIPLIER_LEVELS = [1, 1.5, 2, 2.5, 3];
+              
         this.game.speedLevel = 0;
         this.game.jumpLevel = 0;
         this.game.healthLevel = 0;
@@ -15,9 +18,7 @@ class SceneManager {
         this.game.multiplierLevel = 0;
 
         this.game.cash = 200; // the initial cash amount
-       
-        this.TIME_LEVELS = [3, 6, 12, 24, 48, 100, 150, 200, 250, 300, 350];
-        this.game.timeRemaining = this.TIME_LEVELS[0];
+        this.game.timeRemaining = this.TIME_LEVELS[this.game.timeLevel];
         
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         
@@ -33,7 +34,7 @@ class SceneManager {
     };
 
     collectCash() {
-        this.game.cash++;
+        this.game.cash += this.MULTIPLIER_LEVELS[this.game.multiplierLevel];
         ASSET_MANAGER.playAsset("./assets/audio/CoinCollect.wav");
     }
 
