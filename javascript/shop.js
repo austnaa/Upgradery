@@ -35,6 +35,14 @@ class Shop {
 
     addConstants() { 
 
+        this.game.MAX_SPEED_LEVEL = 10;
+        this.game.MAX_JUMP_LEVEL = 10;
+        this.game.MAX_HEALTH_LEVEL = 4;
+        this.game.MAX_TIME_LEVEL = 10;
+        this.game.MAX_AMMO_LEVEL = 10;
+        this.game.MAX_SHOOT_SPEED_LEVEL = 10;
+        this.game.MAX_MULTIPLIER_LEVEL = 4;
+
         this.SPEED_COSTS    = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         this.JUMP_COSTS     = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         this.HEALTH_COSTS   = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

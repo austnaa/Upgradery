@@ -25,7 +25,7 @@ class Hud {
         ctx.fillText("" + floor(this.game.timeRemaining), 5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 0.6);
 
         // lives
-        for (let i = 0; i < this.game.lives; i++) {
+        for (let i = 0; i < this.game.gunner.numLives; i++) {
             this.heartAnimation.drawFrame(this.game.clockTick, ctx, (9.25 - 0.5 * i) * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 0.15, PARAMS.SCALE * 0.75);
         }
 

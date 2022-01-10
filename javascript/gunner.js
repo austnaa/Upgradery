@@ -1,8 +1,18 @@
 class Gunner {
-    constructor(game, x, y) {
-        Object.assign(this, { game, x, y});
+    constructor(game, x, y, liveLevel, ammoLevel, shootSpeedLevel) {
+        Object.assign(this, { game, x, y, liveLevel, ammoLevel, shootSpeedLevel});
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/visuals/Gunner.png");
-        
+
+        this.WALK_SPEED_LEVELS = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+        this.JUMP_LEVELS = [0, -75, -100, -150, -200, -225, -250, -275, -300, -325, -350];
+        this.AMMO_LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        this.SHOOT_SPEED_LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        this.LIVE_LEVELS = [1, 2, 3, 4, 5]
+
+        this.numLives = this.LIVE_LEVELS[liveLevel];
+        this.ammo = this.AMMO_LEVELS[ammoLevel];
+        this.shootSpeed = this.SHOOT_SPEED_LEVELS[shootSpeedLevel];
+       
         // this.jumpLevel = 3;  // which upgrade level the jump is on
         // this.speedLevel = 3; // which upgrade level the walk speed is on
         
@@ -46,7 +56,6 @@ class Gunner {
 
     addConstants() {
         this.BB_TOP_MARGIN = 9 * PARAMS.SCALE;
-
         // consider inserting constants from the update() function in here
     }
 
@@ -63,8 +72,9 @@ class Gunner {
 // print({x: this.x, y: this.y});
 
         const TICK = this.game.clockTick;
-        const WALK_SPEED = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100][this.game.speedLevel];
-        const JUMP_INITIAL_VELOCITY = [0, -100, -200, -350][this.game.jumpLevel]; 
+        const WALK_SPEED = this.WALK_SPEED_LEVELS[this.game.speedLevel];
+        const JUMP_INITIAL_VELOCITY = this.JUMP_LEVELS[this.game.jumpLevel]; 
+        // const 
         const GRAVITY = 20;
 
         if (this.state == 3) {

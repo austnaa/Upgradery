@@ -6,13 +6,6 @@ class SceneManager {
         this.y = 0;
         this.playing = false; // should be the main level is running
         
-        this.game.MAX_SPEED_LEVEL = 10;
-        this.game.MAX_JUMP_LEVEL = 10;
-        this.game.MAX_HEALTH_LEVEL = 5;
-        this.game.MAX_TIME_LEVEL = 10;
-        this.game.MAX_AMMO_LEVEL = 10;
-        this.game.MAX_SHOOT_SPEED_LEVEL = 10;
-        this.game.MAX_MULTIPLIER_LEVEL = 4;
         this.game.speedLevel = 0;
         this.game.jumpLevel = 0;
         this.game.healthLevel = 0;
@@ -21,19 +14,16 @@ class SceneManager {
         this.game.shootSpeedLevel = 0;
         this.game.multiplierLevel = 0;
 
-        // this.game.MAX_LIVES = 5;
-        this.game.lives = 1; // the number of lives available at the start of the level
-        
         this.game.cash = 200; // the initial cash amount
        
-        this.TIME = [3, 10];
-        this.game.timeRemaining = this.TIME[0];
+        this.TIME_LEVELS = [3, 6, 12, 24, 48, 100, 150, 200, 250, 300, 350];
+        this.game.timeRemaining = this.TIME_LEVELS[0];
         
-        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH);
+        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         
         // this.loadLevel();
-        // this.loadTitleScreen();
-        this.loadShop();
+        this.loadTitleScreen();
+        // this.loadShop();
     };
 
     clearEntities() {
@@ -59,7 +49,9 @@ class SceneManager {
     }
     
     loadMainLevel() {
-        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH);
+        this.game.timeRemaining = this.TIME_LEVELS[this.game.timeLevel];
+
+        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         this.game.addEntity(this.game.gunner);
 
         this.game.addEntity(new Hud(this.game));
@@ -142,7 +134,7 @@ class SceneManager {
         if (this.game.timeRemaining < 0) {
             // todo: this is where we could do a dye animation
             this.playing = false;
-            this.game.timeRemaining = this.TIME[0];
+            this.game.timeRemaining = this.TIME_LEVELS[0];
             this.clearEntities();
             this.loadShop();
         }
@@ -168,14 +160,9 @@ class SceneManager {
         // todo: will need a bound for the bottom of the map...
 
         
-
-
-
 // print("camera: ") 
 // print({x: this.x, y: this.y})
-
-        
-        
+      
     };
 
 }
