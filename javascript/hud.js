@@ -18,7 +18,7 @@ class Hud {
     
         // cash
         ctx.font = PARAMS.BLOCKWIDTH / 2 + 'px "silkscreennormal"';
-        ctx.fillText("" + floor(this.game.cash), 0.8 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 0.6);
+        ctx.fillText("" + floor(this.game.savedData.cash), 0.8 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 0.6);
         this.cashAnimation.drawFrame(this.game.clockTick, ctx, PARAMS.BLOCKWIDTH * .1, PARAMS.BLOCKWIDTH * 0.1, PARAMS.SCALE * 1.6);
 
         // time remaining

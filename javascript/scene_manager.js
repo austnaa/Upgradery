@@ -1,5 +1,6 @@
 class SceneManager {
     constructor(game) {
+// resetData(); // REMOVE THIS LINE IF YOU WANT DATA TO STORE BETWEEN PLAYS
         this.game = game;
         this.game.camera = this;
         this.x = 0;
@@ -8,23 +9,29 @@ class SceneManager {
 
         this.TIME_LEVELS = [3, 6, 12, 24, 48, 100, 150, 200, 250, 300, 350];
         this.MULTIPLIER_LEVELS = [1, 1.5, 2, 2.5, 3];
-              
-        this.game.speedLevel = 0;
-        this.game.jumpLevel = 0;
-        this.game.healthLevel = 0;
-        this.game.timeLevel = 0;
-        this.game.ammoLevel = 0;
-        this.game.shootSpeedLevel = 0;
-        this.game.multiplierLevel = 0;
 
-        this.game.cash = 200; // the initial cash amount
+        // saved data contains JSON that has cash data and upgradeLevel data
+        // see local_storage.js for example
+        this.game.savedData = loadData();     
+        
         this.game.timeRemaining = this.TIME_LEVELS[this.game.timeLevel];
         
-        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
+        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH);
         
         // this.loadLevel();
         this.loadTitleScreen();
         // this.loadShop();
+        // storeData({
+        //     speedLvl: 0,
+        //     jumpLvl: 1,
+        //     healthLvl: 2,
+        //     timeLvl: 3,
+        //     ammoLvl: 4,
+        //     shootSpeedLvl: 5,
+        //     multiplierLvl: 1
+        // });
+        // resetData();
+        
     };
 
     clearEntities() {
@@ -34,7 +41,7 @@ class SceneManager {
     };
 
     collectCash() {
-        this.game.cash += this.MULTIPLIER_LEVELS[this.game.multiplierLevel];
+        this.game.savedData.cash += this.MULTIPLIER_LEVELS[this.game.savedData.multiplierLevel];
         ASSET_MANAGER.playAsset("./assets/audio/CoinCollect.wav");
     }
 
@@ -50,7 +57,7 @@ class SceneManager {
     }
     
     loadMainLevel() {
-        this.game.timeRemaining = this.TIME_LEVELS[this.game.timeLevel];
+        this.game.timeRemaining = this.TIME_LEVELS[this.game.savedData.timeLevel];
 
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         this.game.addEntity(this.game.gunner);
@@ -133,9 +140,10 @@ class SceneManager {
         
         // load the shop if the time remaining is 0
         if (this.game.timeRemaining < 0) {
-            // todo: this is where we could do a dye animation
+            // todo: this is where we could do a die animation
             this.playing = false;
             this.game.timeRemaining = this.TIME_LEVELS[0];
+            storeData(this.game.savedData);
             this.clearEntities();
             this.loadShop();
         }
