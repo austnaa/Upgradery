@@ -1,5 +1,8 @@
 // TODO: DECOUPLE GUNNER DATA FROM GAME.SPEEDLEVEL ETC
 
+
+// TODO FIGURE OUT HOW TO DO DEATH!!!!
+
 class Gunner {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y});
@@ -50,8 +53,8 @@ class Gunner {
         this.animations[2][1] = new Animator(this.spritesheet, 0, 48*2, 48, 48, 2, 0.6, 0, false, true); // jump right
         
         // die
-        this.animations[3][0] = new Animator(this.spritesheet, 0, 48*7, 48, 48, 8, 0.2, 0, false, true); // die left
-        this.animations[3][1] = new Animator(this.spritesheet, 0, 48*3, 48, 48, 8, 0.2, 0, false, true); // die right
+        this.animations[3][0] = new Animator(this.spritesheet, 0, 48*7, 48, 48, 8, 0.1, 0, false, false); // die left
+        this.animations[3][1] = new Animator(this.spritesheet, 0, 48*3, 48, 48, 8, 0.1, 0, false, false); // die right
     }
 
     addConstants() {
@@ -65,7 +68,6 @@ class Gunner {
         let leftXOffset = this.facing ? 18 : 12;
         this.BB = new BoundingBox(this.x + leftXOffset * PARAMS.SCALE, this.y + this.BB_TOP_MARGIN, PARAMS.BLOCKWIDTH - 6 * PARAMS.SCALE, PARAMS.BLOCKWIDTH * 1.03); 
     };
-
     
     update() {
 // print("gunner ");
@@ -155,7 +157,8 @@ class Gunner {
                 }
 
                 // moving down
-                if (that.velocityY > 0 && entity instanceof Block && that.BB.collide(entity.topBB) && !that.BB.collide(entity.bottomBB)) {
+                if (that.velocityY > 0 && (entity instanceof Block || entity instanceof Transporter)
+                        && that.BB.collide(entity.topBB) && !that.BB.collide(entity.bottomBB)) {
 // print("above")
                     that.y = Math.floor(entity.BB.top - (that.BB_TOP_MARGIN + PARAMS.BLOCKWIDTH * 1.03));
                     that.velocityY = 0;
@@ -164,11 +167,15 @@ class Gunner {
                         that.state = 0;
                     }
                     that.updateBB();
+
+                    if (entity instanceof Transporter) {
+                        that.x += entity.transportValue;
+                    }
                 }
 
                 // moving up
-                if (that.velocityY < 0 && entity instanceof Block && that.BB.collide(entity.bottomBB) && !that.BB.collide(entity.topBB)) {
-                        
+                if (that.velocityY < 0 && (entity instanceof Block || entity instanceof Transporter)
+                        && that.BB.collide(entity.bottomBB) && !that.BB.collide(entity.topBB)) {
 // print("below")
                     that.y = Math.floor(entity.BB.bottom - that.BB_TOP_MARGIN);
                     that.velocityY = 0;
@@ -176,7 +183,8 @@ class Gunner {
                 }
 
                 // sprite to the right or left    
-                if (that.velocityX != 0 && entity instanceof Block && that.BB.collide(entity.topBB) && that.BB.collide(entity.bottomBB)) {
+                if (that.velocityX != 0 && (entity instanceof Block || entity instanceof Transporter) 
+                        && that.BB.collide(entity.topBB) && that.BB.collide(entity.bottomBB)) {
                     // to right
                     if (that.lastBB.left <= entity.BB.right && that.lastBB.right >= entity.BB.right) {
 // print("to right") 
@@ -198,7 +206,11 @@ class Gunner {
                         that.updateBB();        
                     }
         
-                }       
+                }   
+                
+                if (entity instanceof Hammer && entity.isLethalAnimation()) {
+                    that.state = 3;
+                }
                 
             }
         });

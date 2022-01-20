@@ -10,16 +10,19 @@ class SceneManager {
         this.TIME_LEVELS = [3, 6, 12, 24, 48, 100, 150, 200, 250, 300, 350];
         this.MULTIPLIER_LEVELS = [1, 1.5, 2, 2.5, 3];
 
+        // resetData();
+
         // saved data contains JSON that has cash data and upgradeLevel data
         // see local_storage.js for example
-        this.game.savedData = loadData();     
+        this.game.savedData = loadData(); 
+        this.game.savedData.cash = 1000;    
         
         this.game.timeRemaining = this.TIME_LEVELS[this.game.timeLevel];
         
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH);
         
-        // this.loadLevel();
-        this.loadTitleScreen();
+        this.play();
+        // this.loadTitleScreen();
         // this.loadShop();
         // storeData({
         //     speedLvl: 0,
@@ -30,7 +33,7 @@ class SceneManager {
         //     shootSpeedLvl: 5,
         //     multiplierLvl: 1
         // });
-        // resetData();
+        
         
     };
 
@@ -58,13 +61,13 @@ class SceneManager {
     
     loadMainLevel() {
         this.game.timeRemaining = this.TIME_LEVELS[this.game.savedData.timeLevel];
-
+        
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         this.game.addEntity(this.game.gunner);
 
         this.game.addEntity(new Hud(this.game));
         
-        this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 1.7, 0));
+        // this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 1.7, 0));
 
         // near start
         this.game.addEntity(new Cash(this.game, 2.25 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
@@ -80,16 +83,19 @@ class SceneManager {
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true));
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true));
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true)); 
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 2, true)); 
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 0, true)); 
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true)); 
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 2, true));   
+        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true)); 
+        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 2, true)); 
+        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 0, true)); 
+        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true)); 
+        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 2, true));   
+        // this.game.addEntity(new Transporter(this.game, PARAMS.BLOCKWIDTH * 5, PARAMS.BLOCKWIDTH * 3, 2, true));
+        // this.game.addEntity(new Hammer(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 0));
+        
         // row 4
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1, false)); 
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1), false);
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1), false); 
+        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1), true);
+        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1), true); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 2, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1, false)); 

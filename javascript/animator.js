@@ -42,3 +42,40 @@ class Animator {
         return (this.elapsedTime >= this.totalTime);
     };
 };
+
+// animator that also accepts a hammer entity.
+// on drawFrame, tells hammer to update its BB depending on the animation frame
+class HammerAnimator extends Animator {
+
+    constructor(hammerEntity, spritesheet, xStart, yStart, width, height, frameCount, frameDuration, framePadding, reverse, loop) {
+        super(spritesheet, xStart, yStart, width, height, frameCount, frameDuration, framePadding, reverse, loop);
+        this.hammerEntity = hammerEntity;
+
+    }
+    
+    // notifies the hammer entity attatched to this animator that
+    // the frame has changed and the BB should also change
+    drawFrame(tick, ctx, x, y, scale) {
+        super.drawFrame(tick, ctx, x, y, scale);
+        
+        if (this.isDone()) {
+            // draw the first image (looks like it isn't doing anything)
+            ctx.drawImage(this.spritesheet, this.xStart, this.yStart, this.width, this.height, x, y, this.width * scale, this.height * scale);
+            
+            // update the BB to be the initial state
+            this.hammerEntity.updateBB(0);
+
+            // let the hammer know it is waiting until it can repeat again.
+            // tell it to increment its wait timer
+            this.hammerEntity.updateAnimationTimeout(tick);
+
+            // restart the animation if the hammer is ready.
+            if (this.hammerEntity.readyToLoop()) {
+                this.elapsedTime = 0;
+            }
+        } else {
+            this.hammerEntity.updateBB(this.currentFrame());
+        }
+        
+    }
+};
