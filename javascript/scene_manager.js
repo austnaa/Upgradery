@@ -1,6 +1,6 @@
 class SceneManager {
     constructor(game) {
-// resetData(); // REMOVE THIS LINE IF YOU WANT DATA TO STORE BETWEEN PLAYS
+        resetData(); 
         this.game = game;
         this.game.camera = this;
         this.x = 0;
@@ -15,26 +15,14 @@ class SceneManager {
         // saved data contains JSON that has cash data and upgradeLevel data
         // see local_storage.js for example
         this.game.savedData = loadData(); 
-        this.game.savedData.cash = 1000;    
+        console.log(this.game.savedData);
+   
         
         this.game.timeRemaining = this.TIME_LEVELS[this.game.timeLevel];
         
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH / 4, PARAMS.BLOCKWIDTH);
         
         this.play();
-        // this.loadTitleScreen();
-        // this.loadShop();
-        // storeData({
-        //     speedLvl: 0,
-        //     jumpLvl: 1,
-        //     healthLvl: 2,
-        //     timeLvl: 3,
-        //     ammoLvl: 4,
-        //     shootSpeedLvl: 5,
-        //     multiplierLvl: 1
-        // });
-        
-        
     };
 
     clearEntities() {
@@ -67,7 +55,7 @@ class SceneManager {
 
         this.game.addEntity(new Hud(this.game));
         
-        // this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 1.7, 0));
+        this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 1.7, 0));
 
         // near start
         this.game.addEntity(new Cash(this.game, 2.25 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
@@ -77,19 +65,20 @@ class SceneManager {
         this.game.addEntity(new Cash(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
         this.game.addEntity(new Cash(this.game, 3 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
         this.game.addEntity(new Cash(this.game, 3.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
-
-       
+ 
         // row 3
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true));
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true));
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 2, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 0, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 2, true));   
-        // this.game.addEntity(new Transporter(this.game, PARAMS.BLOCKWIDTH * 5, PARAMS.BLOCKWIDTH * 3, 2, true));
-        // this.game.addEntity(new Hammer(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 0));
+        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 1, true)); 
+        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 3, 0, 3, 0, 2, true)); 
+        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 4, 0, 3, 0, 0, true)); 
+        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 4, 0, 3, 0, 1, true)); 
+        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 4, 0, 3, 0, 2, true));   
+        
+        this.game.addEntity(new Hammer(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 0));
+
+        this.game.addEntity(new Transporter(this.game, PARAMS.BLOCKWIDTH * 11, PARAMS.BLOCKWIDTH * 3, 2, true));
         
         // row 4
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
@@ -98,8 +87,8 @@ class SceneManager {
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1), true); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 2, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1, false)); 
-        this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 2), false);
+
+
         // row 5
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 0, true)); 
         this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 1, false)); 
