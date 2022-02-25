@@ -75,10 +75,10 @@ function resetData() {
         cash: 100,
         speedLevel: 10,
         jumpLevel: 10,
-        healthLevel: 0,
+        healthLevel: 4,
         timeLevel: 10,
         ammoLevel: 10,
-        shootSpeedLevel: 0,
+        shootSpeedLevel: 6,
         multiplierLevel: 0
     });
 }

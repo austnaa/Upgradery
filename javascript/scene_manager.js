@@ -53,6 +53,8 @@ class SceneManager {
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 4, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         this.game.addEntity(this.game.gunner);
 
+        this.game.addEntity(new HostileGunner(this.game, PARAMS.BLOCKWIDTH * 12 , PARAMS.BLOCKWIDTH * 3.8, 0, 0.5, 10));
+
         this.game.addEntity(new Hud(this.game));
         
         // this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 1.7, 0));

@@ -11,12 +11,15 @@ class Gunner {
         this.WALK_SPEED_LEVELS = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
         this.JUMP_LEVELS = [0, -75, -100, -150, -200, -225, -250, -275, -300, -325, -350];
         this.AMMO_LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.SHOOT_SPEED_LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        this.SHOOT_SPEED_LEVELS = [1.2, 1, 0.8, 0.6, 0.4, 0.3, 0.2];
         this.LIVE_LEVELS = [1, 2, 3, 4, 5];
 
-        this.numLives = this.LIVE_LEVELS[this.game.savedData.healthLevel];
+        this.maxLives = this.LIVE_LEVELS[this.game.savedData.healthLevel];
+        this.numLives = this.maxLives;
         this.ammo = this.AMMO_LEVELS[this.game.savedData.ammoLevel];
-        this.shootSpeed = this.SHOOT_SPEED_LEVELS[this.game.savedData.shootSpeedLevel];
+        this.shootTimeout = this.SHOOT_SPEED_LEVELS[this.game.savedData.shootSpeedLevel];
+
+        this.shootTimer = this.shootTimeout;
        
         
         this.velocityX = 0;
@@ -25,8 +28,7 @@ class Gunner {
         this.facing = 1; // 0: right, 1: left,
         this.state = 0;  // 0: idle,  1: run,  2: jump, 3: dead
 
-        this.shootTimeout = 0.3;
-        this.shootTimer = this.shootTimeout;
+        
 
 
         this.updateBB();
@@ -72,6 +74,13 @@ class Gunner {
         let leftXOffset = this.facing ? 18 : 12;
         this.BB = new BoundingBox(this.x + leftXOffset * PARAMS.SCALE, this.y + this.BB_TOP_MARGIN, PARAMS.BLOCKWIDTH - 6 * PARAMS.SCALE, PARAMS.BLOCKWIDTH * 1.03); 
     };
+
+    decrementHealth() {
+        this.numLives--;
+        if (this.numLives <= 0) {
+            this.state = 3;
+        }
+    }
     
     update() {
 // print("gunner ");
@@ -89,13 +98,17 @@ class Gunner {
             if (this.shootTimer == 0 && this.ammo > 0) {
                 this.ammo--;
                 this.shootTimer = this.shootTimeout;
-                this.game.addEntity(new Bullet(this.game, this.x, this.y, this.facing ? 1 : -1));
+                this.game.addEntity(new Bullet(this.game, this.x, this.y, false, this.facing ? 1 : -1));
                 ASSET_MANAGER.playAsset("./assets/audio/shootSound.wav");
             }
         }
 
         if (this.state == 3) {
             // todo: handle death?
+            if (this.animations[this.state][this.facing].isDone()) {
+                console.log("GAME OVER")
+                this.game.timeRemaining = 0;
+            }
         } else {
             
             if (this.state == 2) { // gunner is currently jumping (air functionality)
