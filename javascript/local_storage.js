@@ -73,11 +73,11 @@ function resetData() {
     
     storeData({
         cash: 100,
-        speedLevel: 0,
-        jumpLevel: 0,
+        speedLevel: 10,
+        jumpLevel: 10,
         healthLevel: 0,
-        timeLevel: 0,
-        ammoLevel: 0,
+        timeLevel: 10,
+        ammoLevel: 10,
         shootSpeedLevel: 0,
         multiplierLevel: 0
     });

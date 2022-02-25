@@ -25,6 +25,10 @@ class Gunner {
         this.facing = 1; // 0: right, 1: left,
         this.state = 0;  // 0: idle,  1: run,  2: jump, 3: dead
 
+        this.shootTimeout = 0.3;
+        this.shootTimer = this.shootTimeout;
+
+
         this.updateBB();
 
         this.addAnimations();
@@ -78,6 +82,17 @@ class Gunner {
         const JUMP_INITIAL_VELOCITY = this.JUMP_LEVELS[this.game.savedData.jumpLevel]; // could be moved to constructor
         // const 
         const GRAVITY = 20;
+
+        // shooting
+        this.shootTimer = Math.max(0, this.shootTimer - this.game.clockTick);
+        if (this.game.shoot()) {
+            if (this.shootTimer == 0 && this.ammo > 0) {
+                this.ammo--;
+                this.shootTimer = this.shootTimeout;
+                this.game.addEntity(new Bullet(this.game, this.x, this.y, this.facing ? 1 : -1));
+                ASSET_MANAGER.playAsset("./assets/audio/shootSound.wav");
+            }
+        }
 
         if (this.state == 3) {
             // todo: handle death?
@@ -231,5 +246,7 @@ class Gunner {
             ctx.strokeStyle = 'Red';
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         }
+
+
     };
 };

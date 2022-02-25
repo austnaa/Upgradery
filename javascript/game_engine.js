@@ -93,7 +93,13 @@ class GameEngine {
     };
 
     addEntity(entity) {
-        this.entitiesToAdd.push(entity);
+        if (entity instanceof Bullet) {
+            // want to add to front of everything...
+            this.entities.unshift(entity);
+        } else {
+            this.entitiesToAdd.push(entity);
+        }
+        
     };
 
     draw() {
@@ -141,8 +147,9 @@ class GameEngine {
     }
 
     shoot() {
-        return this.keys[' '];
+        return this.keys[' '] || this.keys[';'];
     }
+    
     // added code above
 
     get["deltaTime"]() { return this.clockTick; }
