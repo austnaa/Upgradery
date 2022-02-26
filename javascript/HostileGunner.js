@@ -77,7 +77,7 @@ class HostileGunner {
         if (this.state == 3) {
             // todo: handle death?
             if (this.animations[this.state][this.facing].isDone()) {
-                this.game.timeRemaining = 0;
+                this.removeFromWorld = true; 
             }
         }
 

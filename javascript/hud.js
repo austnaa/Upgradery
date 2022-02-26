@@ -7,13 +7,25 @@ class Hud {
 
         this.heartSheet = ASSET_MANAGER.getAsset("./assets/visuals/Hearts.png");
         this.heartAnimation = new Animator(this.heartSheet, 0, 0, 32, 32, 1, 0.2, 0, false, true);
+
+        this.exitBB = new BoundingBox(PARAMS.CANVAS_WIDTH / 2 - 50, PARAMS.CANVAS_HEIGHT * .85, 200, 50);
     };
 
     update() {
+        if (this.game.mouse) {
+            this.mouseBB = new BoundingBox(this.game.mouse.x, this.game.mouse.y, 1, 1);
+        }
+
+        if (this.game.click) {
+            if (this.mouseBB.collide(this.exitBB)) {
+                this.game.timeRemaining = 0;
+            }
+        }
 
     };
 
-    draw(ctx) {    
+    draw(ctx) {  
+        ctx.save();  
         ctx.fillStyle = "LightGrey";    
     
         // cash
@@ -29,5 +41,15 @@ class Hud {
             this.heartAnimation.drawFrame(this.game.clockTick, ctx, (9.25 - 0.5 * i) * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 0.15, PARAMS.SCALE * 0.75);
         }
 
+        ctx.strokeStyle = "lightgrey";
+        if (this.mouseBB && this.mouseBB.collide(this.exitBB)) {
+            ctx.strokeStyle = "LightGreen";
+            ctx.fillStyle = "LightGreen";
+        }
+        ctx.lineWidth = 10;
+        ctx.strokeRect(this.exitBB.left, this.exitBB.top, this.exitBB.width, this.exitBB.height);
+        ctx.fillText("FINISH", this.exitBB.left + 10, this.exitBB.bottom - 10);
+
+        ctx.restore();
     };
 };

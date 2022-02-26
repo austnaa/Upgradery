@@ -53,7 +53,16 @@ class SceneManager {
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 4, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         this.game.addEntity(this.game.gunner);
 
-        this.game.addEntity(new HostileGunner(this.game, PARAMS.BLOCKWIDTH * 12 , PARAMS.BLOCKWIDTH * 3.8, 0, 0.5, 4));
+
+        const hostileGunners = [
+            { x: 12, y: 3.8, facing: 0, shootSpeed: 0.5, health: 4},
+            { x: 3, y: 1.8, facing: 1, shootSpeed: 0.5, health: 4},
+        ]; 
+
+        hostileGunners.forEach(gunner => {
+            this.game.addEntity(new HostileGunner(this.game, PARAMS.BLOCKWIDTH * gunner.x , PARAMS.BLOCKWIDTH * gunner.y, gunner.facing, gunner.shootSpeed, gunner.health));
+        });
+        
 
         this.game.addEntity(new Hud(this.game));
         

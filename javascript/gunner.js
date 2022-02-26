@@ -10,7 +10,7 @@ class Gunner {
 
         this.WALK_SPEED_LEVELS = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
         this.JUMP_LEVELS = [0, -75, -100, -150, -200, -225, -250, -275, -300, -325, -350];
-        this.AMMO_LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        this.AMMO_LEVELS = [0, 1, 2, 4, 6, 10, 12, 15, 20, 50, 100];
         this.SHOOT_SPEED_LEVELS = [1.2, 1, 0.8, 0.6, 0.4, 0.3, 0.2];
         this.LIVE_LEVELS = [1, 2, 3, 4, 5];
 
