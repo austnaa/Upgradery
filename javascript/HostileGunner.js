@@ -68,7 +68,7 @@ class HostileGunner {
     isCloseToGunner() {
         let xD = Math.abs(this.game.gunner.x - this.x);
         let yD = Math.abs(this.game.gunner.y - this.y);
-        return xD < PARAMS.BLOCKWIDTH * 5 && yD < PARAMS.BLOCKWIDTH * 2;
+        return xD < PARAMS.BLOCKWIDTH * 5 && yD < PARAMS.BLOCKWIDTH;
     }
     
     update() {

@@ -49,16 +49,14 @@ class SceneManager {
     
     loadMainLevel() {
         this.game.timeRemaining = this.TIME_LEVELS[this.game.savedData.timeLevel];
-        
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 4, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         this.game.addEntity(this.game.gunner);
 
 
         const hostileGunners = [
-            { x: 12, y: 3.8, facing: 0, shootSpeed: 0.5, health: 4},
+            // { x: 12, y: 3.8, facing: 0, shootSpeed: 0.5, health: 4},
             { x: 3, y: 1.8, facing: 1, shootSpeed: 0.5, health: 4},
         ]; 
-
         hostileGunners.forEach(gunner => {
             this.game.addEntity(new HostileGunner(this.game, PARAMS.BLOCKWIDTH * gunner.x , PARAMS.BLOCKWIDTH * gunner.y, gunner.facing, gunner.shootSpeed, gunner.health));
         });
@@ -69,23 +67,18 @@ class SceneManager {
         // this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 1.7, 0));
 
         // near start
-        this.game.addEntity(new Cash(this.game, 2.25 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
-        this.game.addEntity(new Cash(this.game, 2.75 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
-        this.game.addEntity(new Cash(this.game, 3.25 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
-        this.game.addEntity(new Cash(this.game, 3.75 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
-        this.game.addEntity(new Cash(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
-        this.game.addEntity(new Cash(this.game, 3 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
-        this.game.addEntity(new Cash(this.game, 3.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
- 
-        
-        
+        cashLocals.forEach(c => {
+            this.game.addEntity(new Cash(this.game, c.x * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * c.y));
+        });
         blocks.forEach(block => {
             this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * block.x, PARAMS.BLOCKWIDTH * block.y, block.startRow, block.startCol, block.row, block.col, block.isCollidable)); 
         });
-        
-        // this.game.addEntity(new Hammer(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 0));
-
-        // this.game.addEntity(new Transporter(this.game, PARAMS.BLOCKWIDTH * 11, PARAMS.BLOCKWIDTH * 3, 2, true));
+        hammers.forEach(h => {
+            this.game.addEntity(new Hammer(this.game, PARAMS.BLOCKWIDTH * h.x, PARAMS.BLOCKWIDTH * h.y));
+        });
+        transporters.forEach(t => {
+            this.game.addEntity(new Transporter(this.game, PARAMS.BLOCKWIDTH * t.x, PARAMS.BLOCKWIDTH * t.y, t.w, t.movingRight));
+        });
         
         // row 4
         // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
