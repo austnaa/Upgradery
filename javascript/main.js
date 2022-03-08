@@ -15,6 +15,7 @@ ASSET_MANAGER.queueDownload("./assets/audio/owHurt.wav");
 // visuals
 ASSET_MANAGER.queueDownload("./assets/visuals/Gunner.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/gunnerRed.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/gunnerYellow.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/Bullet.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/MuzzleFlash.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/EnvironmentTiles.png");
