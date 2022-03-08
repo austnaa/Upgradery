@@ -20,7 +20,7 @@ class SceneManager {
         
         this.game.timeRemaining = this.TIME_LEVELS[this.game.timeLevel];
         
-        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH);
+        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 14, PARAMS.BLOCKWIDTH);
         
         this.play();
     };
@@ -49,14 +49,11 @@ class SceneManager {
     
     loadMainLevel() {
         this.game.timeRemaining = this.TIME_LEVELS[this.game.savedData.timeLevel];
-        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 4, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
+        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 30, PARAMS.BLOCKWIDTH * 4, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         this.game.addEntity(this.game.gunner);
 
 
-        const hostileGunners = [
-            // { x: 12, y: 3.8, facing: 0, shootSpeed: 0.5, health: 4},
-            { x: 3, y: 1.8, facing: 1, shootSpeed: 0.5, health: 4},
-        ]; 
+        
         hostileGunners.forEach(gunner => {
             this.game.addEntity(new HostileGunner(this.game, PARAMS.BLOCKWIDTH * gunner.x , PARAMS.BLOCKWIDTH * gunner.y, gunner.facing, gunner.shootSpeed, gunner.health));
         });

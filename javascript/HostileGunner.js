@@ -7,7 +7,6 @@ class HostileGunner {
         Object.assign(this, { game, x, y, facing, shootTimeout, health});
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/visuals/gunnerRed.png");
         
-        this.shootTimeout = 1.5
         this.shootTimer = this.shootTimeout;
 
         this.maxHealth = this.health;
