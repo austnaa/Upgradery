@@ -49,7 +49,7 @@ class SceneManager {
     
     loadMainLevel() {
         this.game.timeRemaining = this.TIME_LEVELS[this.game.savedData.timeLevel];
-        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 30, PARAMS.BLOCKWIDTH * 4, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
+        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 4, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         this.game.addEntity(this.game.gunner);
 
 
@@ -76,6 +76,11 @@ class SceneManager {
         transporters.forEach(t => {
             this.game.addEntity(new Transporter(this.game, PARAMS.BLOCKWIDTH * t.x, PARAMS.BLOCKWIDTH * t.y, t.w, t.movingRight));
         });
+
+        this.game.addEntity(new Boss(this.game, PARAMS.BLOCKWIDTH * 25, PARAMS.BLOCKWIDTH * 26.8));
+
+
+
         
         // row 4
         // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
@@ -132,12 +137,6 @@ class SceneManager {
 
         }
 
-
-
-
-
-
-
         // decrement time if currently playing the main level
         if (this.playing) {
             this.game.timeRemaining -= this.game.clockTick;
@@ -162,15 +161,16 @@ class SceneManager {
         // set the left and right bounds on the camera
         this.x = this.game.gunner.x - midpointW;
         this.x = Math.max(0, this.x);
-        this.x = Math.min(10000, this.x); // todo: will need a bound for the right of the map...
+        this.x = Math.min(this.x, 25 * PARAMS.BLOCKWIDTH);
 
         // updates the y value only if the gunner is not jumping
         if (this.game.gunner.state != 2) {
             // todo: 
         }
 
-        this.y = this.game.gunner.y  - midpointW;
+        this.y = this.game.gunner.y - midpointW;
         this.y = Math.max(0, this.y);
+        // this.y = Math.min(this.y, 20 * PARAMS.BLOCKWIDTH);
         // todo: will need a bound for the bottom of the map...
 
         

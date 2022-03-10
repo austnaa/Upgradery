@@ -8,13 +8,13 @@
 
 const hostileGunners = [
     // { x: 12, y: 3.8, facing: 0, shootSpeed: 0.5, health: 4},
-    { x: 3, y: 1.8, facing: 1, shootSpeed: 1.5, health: 4},
-    { x: 25, y: 12.8, facing: 1, shootSpeed: 1.5, health: 4},
-    { x: 15, y: 14.8, facing: 1, shootSpeed: 1.5, health: 4},
-    { x: 19, y: 14.8, facing: 1, shootSpeed: 1.5, health: 4},
-    { x: 13, y: 18.8, facing: 0, shootSpeed: 1.5, health: 4},
-    { x: 5, y: 18.8, facing: 0, shootSpeed: 1.5, health: 4},
-    { x: 8, y: 23.8, facing: 0, shootSpeed: 1.5, health: 4},
+    { x: 3, y: 1.8, facing: 1, shootSpeed: 1.5, health: 2},
+    { x: 25, y: 12.8, facing: 1, shootSpeed: 1.5, health: 2},
+    { x: 15, y: 14.8, facing: 1, shootSpeed: 1.5, health: 2},
+    { x: 19, y: 14.8, facing: 1, shootSpeed: 1.5, health: 2},
+    { x: 13, y: 18.8, facing: 0, shootSpeed: 1.5, health: 2},
+    { x: 5, y: 18.8, facing: 0, shootSpeed: 1.5, health: 2},
+    { x: 8, y: 23.8, facing: 0, shootSpeed: 1.5, health: 2},
 ]; 
 
 
@@ -609,7 +609,7 @@ const blocks = [
     {x: 27, y: 29, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
     {x: 28, y: 29, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
     {x: 29, y: 29, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-    {x: 30, y: 29, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
+    {x: 30, y: 29, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
 
     // row 30
     {x: 1, y: 30, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
@@ -641,7 +641,8 @@ const blocks = [
     {x: 27, y: 30, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
     {x: 28, y: 30, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
     {x: 29, y: 30, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-    {x: 30, y: 30, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
+    {x: 30, y: 30, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    
 
     // row 31
     {x: 1, y: 31, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
@@ -673,7 +674,8 @@ const blocks = [
     {x: 27, y: 31, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
     {x: 28, y: 31, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
     {x: 29, y: 31, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-    {x: 30, y: 31, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
+    {x: 30, y: 31, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    {x: 31, y: 31, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
 
     // row 31
     {x: 1, y: 32, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
@@ -705,7 +707,8 @@ const blocks = [
     {x: 27, y: 32, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
     {x: 28, y: 32, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
     {x: 29, y: 32, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-    {x: 30, y: 32, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
+    {x: 30, y: 32, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    {x: 31, y: 32, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
 
 
     // right walls near boss
@@ -740,6 +743,16 @@ const blocks = [
     {x: 30, y: 26, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
     {x: 30, y: 27, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
     {x: 30, y: 28, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    {x: 30, y: 29, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+
+    {x: 31, y: 22, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    {x: 31, y: 23, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    {x: 31, y: 24, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    {x: 31, y: 25, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    {x: 31, y: 26, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    {x: 31, y: 27, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    {x: 31, y: 28, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
+    {x: 31, y: 29, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
 
     
     // {x: 16, y: 25, startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true},

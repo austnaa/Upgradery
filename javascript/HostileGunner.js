@@ -13,6 +13,8 @@ class HostileGunner {
 
         this.state = 0;  // 0: idle,  1: run,  2: jump, 3: dead
 
+        this.showWinText = false;
+
         this.updateBB();
 
         this.addAnimations();
@@ -52,7 +54,6 @@ class HostileGunner {
 
     updateBB() {
         this.lastBB = this.BB;
-        this.lastLandingBB = this.landingBB;
         let leftXOffset = this.facing ? 18 : 12;
         this.BB = new BoundingBox(this.x + leftXOffset * PARAMS.SCALE, this.y + this.BB_TOP_MARGIN, PARAMS.BLOCKWIDTH - 6 * PARAMS.SCALE, PARAMS.BLOCKWIDTH * 1.03); 
     };
@@ -77,6 +78,8 @@ class HostileGunner {
             // todo: handle death?
             if (this.animations[this.state][this.facing].isDone()) {
                 this.removeFromWorld = true; 
+                ASSET_MANAGER.playAsset("./assets/audio/gameWin.wav");
+                this.showWinText = true;
             }
         }
 
@@ -113,6 +116,12 @@ class HostileGunner {
                          this.BB.top - 10 - this.game.camera.y, PARAMS.BLOCKWIDTH * .8, 10);
             ctx.strokeRect(this.BB.x - this.game.camera.x + 5, 
                             this.BB.top - 10 - this.game.camera.y, PARAMS.BLOCKWIDTH * .8, 10);
+        }
+
+        if (this.showWinText) {
+            ctx.font = 48 + 'px "silkscreennormal"';
+            ctx.textAlign = "center";
+            ctx.fillText("YOU WIN!", 100, 200);
         }
 
         if (PARAMS.DEBUG) {

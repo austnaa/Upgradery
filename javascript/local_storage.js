@@ -72,11 +72,11 @@ function storeData(upgradeLevelJSON) {
 function resetData() {
     
     storeData({
-        cash: 20,
-        speedLevel: 10,
-        jumpLevel: 10,
-        healthLevel: 10,
-        timeLevel: 10,
+        cash: 5,
+        speedLevel: 0,
+        jumpLevel: 0,
+        healthLevel: 0,
+        timeLevel: 0,
         ammoLevel: 0,
         shootSpeedLevel: 0,
         multiplierLevel: 0

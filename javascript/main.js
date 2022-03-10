@@ -10,6 +10,7 @@ ASSET_MANAGER.queueDownload("./assets/audio/CoinUpgrade.wav");
 ASSET_MANAGER.queueDownload("./assets/audio/MaxLevelUpgrade.wav");
 ASSET_MANAGER.queueDownload("./assets/audio/shootSound.wav");
 ASSET_MANAGER.queueDownload("./assets/audio/owHurt.wav");
+ASSET_MANAGER.queueDownload("./assets/audio/gameWin.wav");
 
 
 // visuals

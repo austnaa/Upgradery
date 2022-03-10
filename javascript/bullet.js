@@ -30,11 +30,12 @@ class Bullet {
                 }
 
                 // hitting an enemy
-                if (entity instanceof HostileGunner) {
+                if (entity instanceof HostileGunner || entity instanceof Boss) {
                     entity.decrementHealth();
                     that.removeFromWorld = true;
                     // play enemy hit sound
                     ASSET_MANAGER.playAsset("./assets/audio/owHurt.wav");
+                    
                 }
 
                 if (entity instanceof Gunner && that.isHostile) {
