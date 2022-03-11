@@ -1,6 +1,5 @@
 class SceneManager {
     constructor(game) {
-        resetData(); 
         this.game = game;
         this.game.camera = this;
         this.x = 0;

@@ -169,8 +169,11 @@ class Gunner {
             // }
         }
 
-        this.x += this.velocityX * TICK * PARAMS.SCALE;
-        this.y += this.velocityY * TICK * PARAMS.SCALE;
+        if (this.state != 3) {
+            this.x += this.velocityX * TICK * PARAMS.SCALE;
+            this.y += this.velocityY * TICK * PARAMS.SCALE;
+        }
+        
         
         this.updateBB();
 
