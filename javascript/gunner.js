@@ -11,7 +11,7 @@ class Gunner {
         this.WALK_SPEED_LEVELS = [0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200];
         this.JUMP_LEVELS = [0, -75, -100, -150, -200, -225, -250, -275, -300, -325, -350];
         this.AMMO_LEVELS = [0, 1, 2, 4, 6, 10, 12, 15, 20, 50, 100];
-        this.SHOOT_SPEED_LEVELS = [1.2, 1.1, 1, 0.9, 0.8, 0.6, 0.4, 0.3, 0.25, 0.2];
+        this.SHOOT_SPEED_LEVELS = [1.2, 1.1, 1, 0.9, 0.8, 0.6, 0.4, 0.3, 0.25, 0.2, 0.15];
         this.LIVE_LEVELS = [1, 2, 3, 4, 5];
 
         this.maxLives = this.LIVE_LEVELS[this.game.savedData.healthLevel];

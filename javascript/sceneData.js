@@ -11,10 +11,10 @@ const hostileGunners = [
     { x: 3, y: 1.8, facing: 1, shootSpeed: 1.5, health: 2},
     { x: 25, y: 12.8, facing: 1, shootSpeed: 1.5, health: 2},
     { x: 15, y: 14.8, facing: 1, shootSpeed: 1.5, health: 2},
-    { x: 19, y: 14.8, facing: 1, shootSpeed: 1.5, health: 2},
-    { x: 13, y: 18.8, facing: 0, shootSpeed: 1.5, health: 2},
-    { x: 5, y: 18.8, facing: 0, shootSpeed: 1.5, health: 2},
-    { x: 8, y: 23.8, facing: 0, shootSpeed: 1.5, health: 2},
+    { x: 19, y: 14.8, facing: 1, shootSpeed: 1.5, health: 3},
+    { x: 13, y: 18.8, facing: 0, shootSpeed: 1.5, health: 3},
+    { x: 5, y: 18.8, facing: 0, shootSpeed: 1.5, health: 3},
+    { x: 8, y: 23.8, facing: 0, shootSpeed: 1.5, health: 3},
 ]; 
 
 
