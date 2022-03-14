@@ -9,7 +9,7 @@ class SceneManager {
         this.TIME_LEVELS = [3, 6, 12, 24, 48, 100, 150, 200, 250, 300, 350];
         this.MULTIPLIER_LEVELS = [1, 1.5, 2, 2.5, 3];
 
-        // resetData();
+        resetData();
 
         // saved data contains JSON that has cash data and upgradeLevel data
         // see local_storage.js for example
@@ -20,8 +20,8 @@ class SceneManager {
         this.game.timeRemaining = this.TIME_LEVELS[this.game.timeLevel];
         
         this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 14, PARAMS.BLOCKWIDTH);
-        
-        this.play();
+        this.loadTitleScreen();
+        // this.play();
     };
 
     clearEntities() {
@@ -102,42 +102,39 @@ class SceneManager {
 
         }
 
-        if (!this.gameOver) {
-
-            // decrement time if currently playing the main level
-            if (this.playing) {
-                this.game.timeRemaining -= this.game.clockTick;
-            }
-            
-            // load the shop if the time remaining is 0
-            if (this.game.timeRemaining < 0) {
-                // todo: this is where we could do a die animation
-                this.playing = false;
-                this.game.timeRemaining = this.TIME_LEVELS[0];
-                storeData(this.game.savedData);
-                this.clearEntities();
-                this.loadShop();
-            }
-
-            PARAMS.DEBUG = document.getElementById("debug").checked;
-            this.updateAudio();
-
-            // camera settings
-            let midpointW = PARAMS.CANVAS_WIDTH / 2 - PARAMS.BLOCKWIDTH / 2;
-
-            // set the left and right bounds on the camera
-            this.x = this.game.gunner.x - midpointW;
-            this.x = Math.max(0, this.x);
-            this.x = Math.min(this.x, 25 * PARAMS.BLOCKWIDTH);
-
-            // updates the y value only if the gunner is not jumping
-            if (this.game.gunner.state != 2) {
-                // todo: 
-            }
-
-            this.y = this.game.gunner.y - midpointW;
-            this.y = Math.max(0, this.y);
+        // decrement time if currently playing the main level
+        if (this.playing) {
+            this.game.timeRemaining -= this.game.clockTick;
         }
+        
+        // load the shop if the time remaining is 0
+        if (this.game.timeRemaining < 0) {
+            // todo: this is where we could do a die animation
+            this.playing = false;
+            this.game.timeRemaining = this.TIME_LEVELS[0];
+            storeData(this.game.savedData);
+            this.clearEntities();
+            this.loadShop();
+        }
+
+        PARAMS.DEBUG = document.getElementById("debug").checked;
+        this.updateAudio();
+
+        // camera settings
+        let midpointW = PARAMS.CANVAS_WIDTH / 2 - PARAMS.BLOCKWIDTH / 2;
+
+        // set the left and right bounds on the camera
+        this.x = this.game.gunner.x - midpointW;
+        this.x = Math.max(0, this.x);
+        this.x = Math.min(this.x, 25 * PARAMS.BLOCKWIDTH);
+
+        // updates the y value only if the gunner is not jumping
+        if (this.game.gunner.state != 2) {
+            // todo: 
+        }
+
+        this.y = this.game.gunner.y - midpointW;
+        this.y = Math.max(0, this.y);
 
     };
 
