@@ -93,7 +93,7 @@ class GameEngine {
     };
 
     addEntity(entity) {
-        if (entity instanceof Bullet) {
+        if (entity instanceof Bullet || entity instanceof WinScreen) {
             // want to add to front of everything...
             this.entities.unshift(entity);
         } else {

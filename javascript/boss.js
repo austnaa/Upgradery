@@ -7,13 +7,11 @@ class Boss {
         this.SHOOT_SPEED_LEVELS = [1.2, 1, 0.8, 0.6, 0.4, 0.3, 0.2];
         this.LIVE_LEVELS = [1, 2, 3, 4, 5];
 
-        this.maxLives = 1;
+        this.maxLives = 10;
         this.numLives = this.maxLives;
         this.ammo = 10000;
         this.shootTimeout = 0.9;
         this.shootTimer = this.shootTimeout;
-        this.maxHealth = 10;
-        this.health = this.maxHealth;
        
         this.velocityX = 0;
         this.velocityY = 0;
@@ -71,7 +69,6 @@ class Boss {
     };
 
     decrementHealth() {
-        console.log("here")
         this.numLives--;
         if (this.numLives <= 0) {
             this.state = 3;
@@ -91,6 +88,9 @@ class Boss {
             if (this.state == 3) {
                 // todo: handle death?
                 if (this.animations[this.state][this.facing].isDone()) {
+                    this.game.camera.gameOver = true;
+                    ASSET_MANAGER.playAsset("./assets/audio/gameWin.wav");
+                    this.game.addEntity(new WinScreen(this.game));
                     this.removeFromWorld = true;
                     console.log("GAME OVER, YOU WIN!") 
                 }
@@ -304,11 +304,11 @@ class Boss {
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, PARAMS.SCALE * 1.5);
 
 
-        if (this.health > 0) {
+        if (this.numLives > 0) {
 
             ctx.lineWidth = 5;
             ctx.strokeStyle = "Black";
-            let percentage = this.health / this.maxHealth;
+            let percentage = this.numLives / this.maxLives;
             if (percentage * 100 <= 25) {
                 ctx.fillStyle = "Red";
             } else if (percentage * 100 >= 75) {

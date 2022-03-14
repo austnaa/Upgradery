@@ -78,40 +78,6 @@ class SceneManager {
 
         this.game.addEntity(new Boss(this.game, PARAMS.BLOCKWIDTH * 25, PARAMS.BLOCKWIDTH * 26.8));
 
-
-
-        
-        // row 4
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1, false)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1), true);
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 1), true); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 2, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
-
-
-        // // row 5
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 0, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 1, false)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 1), false);
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 1), false); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 2, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 6, PARAMS.BLOCKWIDTH * 5, 0, 3, 0, 0, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 0, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 1, false)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 5, 0, 3, 1, 2), false);
-        // // row 6
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 0, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 1, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 1, false)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 2, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 1), false);
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 1), false); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 6, 0, 6, 1, 0, true));
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 5, PARAMS.BLOCKWIDTH * 6, 0, 3, 0, 1, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 6, PARAMS.BLOCKWIDTH * 6, 0, 6, 1, 1, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 7, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 0, true)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 1, false)); 
-        // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 6, 0, 3, 1, 2), false);
-
         this.game.addEntity(new Background(this.game, 0, 0));
     };
 
@@ -136,58 +102,43 @@ class SceneManager {
 
         }
 
-        // decrement time if currently playing the main level
-        if (this.playing) {
-            this.game.timeRemaining -= this.game.clockTick;
+        if (!this.gameOver) {
+
+            // decrement time if currently playing the main level
+            if (this.playing) {
+                this.game.timeRemaining -= this.game.clockTick;
+            }
+            
+            // load the shop if the time remaining is 0
+            if (this.game.timeRemaining < 0) {
+                // todo: this is where we could do a die animation
+                this.playing = false;
+                this.game.timeRemaining = this.TIME_LEVELS[0];
+                storeData(this.game.savedData);
+                this.clearEntities();
+                this.loadShop();
+            }
+
+            PARAMS.DEBUG = document.getElementById("debug").checked;
+            this.updateAudio();
+
+            // camera settings
+            let midpointW = PARAMS.CANVAS_WIDTH / 2 - PARAMS.BLOCKWIDTH / 2;
+
+            // set the left and right bounds on the camera
+            this.x = this.game.gunner.x - midpointW;
+            this.x = Math.max(0, this.x);
+            this.x = Math.min(this.x, 25 * PARAMS.BLOCKWIDTH);
+
+            // updates the y value only if the gunner is not jumping
+            if (this.game.gunner.state != 2) {
+                // todo: 
+            }
+
+            this.y = this.game.gunner.y - midpointW;
+            this.y = Math.max(0, this.y);
         }
-        
-        // load the shop if the time remaining is 0
-        if (this.game.timeRemaining < 0) {
-            // todo: this is where we could do a die animation
-            this.playing = false;
-            this.game.timeRemaining = this.TIME_LEVELS[0];
-            storeData(this.game.savedData);
-            this.clearEntities();
-            this.loadShop();
-        }
 
-        PARAMS.DEBUG = document.getElementById("debug").checked;
-        this.updateAudio();
-
-        // camera settings
-        let midpointW = PARAMS.CANVAS_WIDTH / 2 - PARAMS.BLOCKWIDTH / 2;
-
-        // set the left and right bounds on the camera
-        this.x = this.game.gunner.x - midpointW;
-        this.x = Math.max(0, this.x);
-        this.x = Math.min(this.x, 25 * PARAMS.BLOCKWIDTH);
-
-        // updates the y value only if the gunner is not jumping
-        if (this.game.gunner.state != 2) {
-            // todo: 
-        }
-
-        this.y = this.game.gunner.y - midpointW;
-        this.y = Math.max(0, this.y);
-        // this.y = Math.min(this.y, 20 * PARAMS.BLOCKWIDTH);
-        // todo: will need a bound for the bottom of the map...
-
-        
-// print("camera: ") 
-// print({x: this.x, y: this.y})
-      
     };
 
 }
-
-
-// CAN DELETE THESE EVENTUALLY
-// this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.15, 0));
-// this.game.addEntity(new RoofScreen(this.game, 3.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 3.25, 0));
-// this.game.addEntity(new Transporter(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2, 0));
-// this.game.addEntity(new Transporter(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.5, 1));
-// this.game.addEntity(new Entry(this.game, 4 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH / 4));
-// this.game.addEntity(new Hammer(this.game, 3 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH / 4));
-// this.game.addEntity(new Money(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH / 4));
-
-    

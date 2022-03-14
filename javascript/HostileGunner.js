@@ -78,21 +78,21 @@ class HostileGunner {
             // todo: handle death?
             if (this.animations[this.state][this.facing].isDone()) {
                 this.removeFromWorld = true; 
-                ASSET_MANAGER.playAsset("./assets/audio/gameWin.wav");
-                this.showWinText = true;
             }
         }
 
         this.facing = this.game.gunner.x - this.x < 0 ? 0 : 1;
         this.updateBB();
 
-        // shooting
-        this.shootTimer = Math.max(0, this.shootTimer - this.game.clockTick);
-        if (this.shootTimer == 0 && this.isCloseToGunner()) {
-            
-            this.shootTimer = this.shootTimeout;
-            this.game.addEntity(new Bullet(this.game, this.x, this.y, true, this.facing ? 1 : -1));
-            ASSET_MANAGER.playAsset("./assets/audio/shootSound.wav");
+        if (this.state != 3) {
+            // shooting
+            this.shootTimer = Math.max(0, this.shootTimer - this.game.clockTick);
+            if (this.shootTimer == 0 && this.isCloseToGunner()) {
+                
+                this.shootTimer = this.shootTimeout;
+                this.game.addEntity(new Bullet(this.game, this.x, this.y, true, this.facing ? 1 : -1));
+                ASSET_MANAGER.playAsset("./assets/audio/shootSound.wav");
+            }
         }
 
     };
@@ -116,12 +116,6 @@ class HostileGunner {
                          this.BB.top - 10 - this.game.camera.y, PARAMS.BLOCKWIDTH * .8, 10);
             ctx.strokeRect(this.BB.x - this.game.camera.x + 5, 
                             this.BB.top - 10 - this.game.camera.y, PARAMS.BLOCKWIDTH * .8, 10);
-        }
-
-        if (this.showWinText) {
-            ctx.font = 48 + 'px "silkscreennormal"';
-            ctx.textAlign = "center";
-            ctx.fillText("YOU WIN!", 100, 200);
         }
 
         if (PARAMS.DEBUG) {
