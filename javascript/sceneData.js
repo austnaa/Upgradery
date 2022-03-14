@@ -1,11 +1,3 @@
-// CONTAINS THE BLOCKS IN THE GAME... USED WHEN LEVEL IS LOADED
-
-
-
-// {x: , y: , startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true}, // floor
-// {x: 1, y: 4, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true}, // wall (inside)
-
-
 const hostileGunners = [
     // { x: 12, y: 3.8, facing: 0, shootSpeed: 0.5, health: 4},
     { x: 3, y: 1.8, facing: 1, shootSpeed: 1.5, health: 2},

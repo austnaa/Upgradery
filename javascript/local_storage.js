@@ -1,4 +1,4 @@
-// contains helper methods for loading and storing data locally.
+// contains helper methods for loading and storing data locally. (not currently used)
 
 const SPEED_LEVEL_KEY = 'SPEED';
 const JUMP_LEVEL_KEY = 'JUMP';
@@ -84,5 +84,4 @@ function resetData() {
 }
 
 
-// resetData();
 loadData();

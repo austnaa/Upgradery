@@ -1,8 +1,3 @@
-// TODO: DECOUPLE GUNNER DATA FROM GAME.SPEEDLEVEL ETC
-
-
-// TODO FIGURE OUT HOW TO DO DEATH!!!!
-
 class Gunner {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y});
@@ -27,9 +22,6 @@ class Gunner {
 
         this.facing = 1; // 0: right, 1: left,
         this.state = 0;  // 0: idle,  1: run,  2: jump, 3: dead
-
-        
-
 
         this.updateBB();
 
@@ -83,8 +75,6 @@ class Gunner {
     }
     
     update() {
-// print("gunner ");
-// print({x: this.x, y: this.y});
 
         const TICK = this.game.clockTick;
         const WALK_SPEED = this.WALK_SPEED_LEVELS[this.game.savedData.speedLevel]; // could be moved to constructor
@@ -247,11 +237,6 @@ class Gunner {
         });
 
 
-    };
-
-    drawMinimap(ctx, mmX, mmY) {
-        // ctx.fillStyle = "Red";
-        // ctx.fillRect(mmX + this.x / PARAMS.BITWIDTH, mmY + this.y / PARAMS.BITWIDTH, this.w / PARAMS.BITWIDTH, PARAMS.SCALE * 2);
     };
 
     draw(ctx) {
