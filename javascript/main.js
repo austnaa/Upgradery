@@ -9,10 +9,14 @@ ASSET_MANAGER.queueDownload("./assets/audio/Upgrade.wav");
 ASSET_MANAGER.queueDownload("./assets/audio/CoinUpgrade.wav");
 ASSET_MANAGER.queueDownload("./assets/audio/MaxLevelUpgrade.wav");
 ASSET_MANAGER.queueDownload("./assets/audio/shootSound.wav");
+ASSET_MANAGER.queueDownload("./assets/audio/owHurt.wav");
+ASSET_MANAGER.queueDownload("./assets/audio/gameWin.wav");
 
 
 // visuals
 ASSET_MANAGER.queueDownload("./assets/visuals/Gunner.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/gunnerRed.png");
+ASSET_MANAGER.queueDownload("./assets/visuals/gunnerYellow.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/Bullet.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/MuzzleFlash.png");
 ASSET_MANAGER.queueDownload("./assets/visuals/EnvironmentTiles.png");

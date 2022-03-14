@@ -20,6 +20,8 @@ class Shop {
         Object.assign(this, {game});
         this.cashSheet = ASSET_MANAGER.getAsset("./assets/visuals/Money.png");
         this.cashAnimation = new Animator(this.cashSheet, 0, 0, 24, 24, 6, 0.2, 0, false, true);
+
+        console.log(this.game.savedData)
         
         this.addConstants();
         this.addBBs();
@@ -31,6 +33,8 @@ class Shop {
         this.ammoCost = this.AMMO_COSTS[0];
         this.shootSpeedCost = this.SHOOT_SPEED_COSTS[0];
         this.multiplierCost = this.MULTIPLIER_COSTS[0];
+
+        this.clickDelay = 0.5;
     };
 
     addConstants() { 
@@ -43,13 +47,13 @@ class Shop {
         this.game.MAX_SHOOT_SPEED_LEVEL = 10;
         this.game.MAX_MULTIPLIER_LEVEL = 4;
 
-        this.SPEED_COSTS    = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.JUMP_COSTS     = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.HEALTH_COSTS   = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.TIME_COSTS     = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.AMMO_COSTS     = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.SHOOT_SPEED_COSTS  = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.MULTIPLIER_COSTS   = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        this.SPEED_COSTS    = [1, 2, 4, 8, 10, 14, 16, 18, 20, 22];
+        this.JUMP_COSTS     = [1, 2, 4, 8, 10, 14, 16, 18, 20, 22];
+        this.HEALTH_COSTS   = [10, 40, 70, 100, 140]
+        this.TIME_COSTS     = [1, 2, 4, 8, 16, 24, 36, 48, 68, 90];
+        this.AMMO_COSTS     = [15, 17, 20, 23, 26, 30, 32, 34, 36, 38];
+        this.SHOOT_SPEED_COSTS  = [15, 17, 20, 23, 26, 30, 32, 34, 36, 38];
+        this.MULTIPLIER_COSTS   = [25, 75, 125, 200];
 
         this.SHOP_TEXT_X = 24;  // x pos of shop title
         this.SHOP_TEXT_Y = 115; // y pos of shop title
@@ -152,8 +156,10 @@ class Shop {
     }
 
     update() {
+        this.clickDelay -= this.game.clockTick;
+
         // check for a click 
-        if (this.game.click) {
+        if (this.game.click && this.clickDelay <= 0) {
             // update the click bounding box so we can use it
             this.mouseBB = new BoundingBox(this.game.click.x, this.game.click.y, 1, 1);
             let upgraded = false;   
@@ -241,6 +247,7 @@ class Shop {
             // if the player upgraded something, save that data
             if (upgraded) {
                 storeData(this.game.savedData);
+                console.log("saved")
             }
 
             // click play

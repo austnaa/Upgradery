@@ -1,6 +1,5 @@
 class SceneManager {
     constructor(game) {
-        resetData(); 
         this.game = game;
         this.game.camera = this;
         this.x = 0;
@@ -20,7 +19,7 @@ class SceneManager {
         
         this.game.timeRemaining = this.TIME_LEVELS[this.game.timeLevel];
         
-        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH);
+        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 14, PARAMS.BLOCKWIDTH);
         
         this.play();
     };
@@ -49,91 +48,38 @@ class SceneManager {
     
     loadMainLevel() {
         this.game.timeRemaining = this.TIME_LEVELS[this.game.savedData.timeLevel];
-        
-        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 9, PARAMS.BLOCKWIDTH * 4, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
+        this.game.gunner = new Gunner(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 4, this.game.healthLevel, this.game.ammoLevel, this.game.shootSpeedLevel);
         this.game.addEntity(this.game.gunner);
+
+
+        
+        hostileGunners.forEach(gunner => {
+            this.game.addEntity(new HostileGunner(this.game, PARAMS.BLOCKWIDTH * gunner.x , PARAMS.BLOCKWIDTH * gunner.y, gunner.facing, gunner.shootSpeed, gunner.health));
+        });
+        
 
         this.game.addEntity(new Hud(this.game));
         
         // this.game.addEntity(new Screen(this.game, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 1.7, 0));
 
         // near start
-        this.game.addEntity(new Cash(this.game, 2.25 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
-        this.game.addEntity(new Cash(this.game, 2.75 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
-        this.game.addEntity(new Cash(this.game, 3.25 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
-        this.game.addEntity(new Cash(this.game, 3.75 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2.25));
-        this.game.addEntity(new Cash(this.game, 2.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
-        this.game.addEntity(new Cash(this.game, 3 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
-        this.game.addEntity(new Cash(this.game, 3.5 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 1.75));
- 
-        
-        const blocks = [
-            // row 3 (main top row)
-            {x: 0, y: 3, startRow: 0, startCol: 3, row: 0, col: 0, isCollidable: true},
-            {x: 1, y: 3, startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true},
-            {x: 2, y: 3, startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true},
-            {x: 3, y: 3, startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true},
-            {x: 4, y: 3, startRow: 0, startCol: 3, row: 0, col: 2, isCollidable: true},
-            {x: 5, y: 3, startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true},
-            {x: 6, y: 3, startRow: 0, startCol: 3, row: 0, col: 2, isCollidable: true},
-
-            {x: 0, y: 4, startRow: 0, startCol: 3, row: 1, col: 0, isCollidable: true},
-            {x: 1, y: 4, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-            {x: 2, y: 4, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-            {x: 3, y: 4, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-            {x: 4, y: 4, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            {x: 5, y: 4, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-            {x: 6, y: 4, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-
-            {x: 0, y: 5, startRow: 0, startCol: 3, row: 1, col: 0, isCollidable: true},
-            {x: 1, y: 5, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-            {x: 2, y: 5, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-            {x: 3, y: 5, startRow: 0, startCol: 3, row: 1, col: 1, isCollidable: true},
-            {x: 4, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            {x: 5, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            {x: 6, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            {x: 7, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            {x: 8, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            {x: 9, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            {x: 10, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            // {x: 11, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            // {x: 12, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            {x: 13, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            {x: 14, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            {x: 15, y: 5, startRow: 0, startCol: 3, row: 1, col: 2, isCollidable: true},
-            
-
-
-
-
-            // {x: 5, y: 3, startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true},
-            // {x: 6, y: 3, startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true},
-            // {x: 7, y: 3, startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true},
-            // {x: 8, y: 3, startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true},
-            // {x: 9, y: 3, startRow: 0, startCol: 3, row: 0, col: 2, isCollidable: true},
-            
-            {x: 0, y: 0, startRow: 0, startCol: 3, row: 0, col: 0, isCollidable: true},
-            {x: 0, y: 1, startRow: 0, startCol: 3, row: 0, col: 0, isCollidable: true},
-            {x: 0, y: 2, startRow: 0, startCol: 3, row: 0, col: 0, isCollidable: true},
-
-            
-            
-            // {x: 7, y: 4, startRow: 0, startCol: 3, row: 0, col: 0, isCollidable: true},
-            // {x: 8, y: 4, startRow: 0, startCol: 3, row: 0, col: 1, isCollidable: true},
-            // {x: 9, y: 4, startRow: 0, startCol: 3, row: 0, col: 2, isCollidable: true},
-
-            
-
-
-
-        ];
+        cashLocals.forEach(c => {
+            this.game.addEntity(new Cash(this.game, c.x * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * c.y));
+        });
         blocks.forEach(block => {
             this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * block.x, PARAMS.BLOCKWIDTH * block.y, block.startRow, block.startCol, block.row, block.col, block.isCollidable)); 
         });
-        
-        // this.game.addEntity(new Hammer(this.game, PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 0));
+        hammers.forEach(h => {
+            this.game.addEntity(new Hammer(this.game, PARAMS.BLOCKWIDTH * h.x, PARAMS.BLOCKWIDTH * h.y));
+        });
+        transporters.forEach(t => {
+            this.game.addEntity(new Transporter(this.game, PARAMS.BLOCKWIDTH * t.x, PARAMS.BLOCKWIDTH * t.y, t.w, t.movingRight));
+        });
 
-        // this.game.addEntity(new Transporter(this.game, PARAMS.BLOCKWIDTH * 11, PARAMS.BLOCKWIDTH * 3, 2, true));
+        this.game.addEntity(new Boss(this.game, PARAMS.BLOCKWIDTH * 25, PARAMS.BLOCKWIDTH * 26.8));
+
+
+
         
         // row 4
         // this.game.addEntity(new Block(this.game, PARAMS.BLOCKWIDTH * 0, PARAMS.BLOCKWIDTH * 4, 0, 3, 1, 0, true)); 
@@ -183,6 +129,13 @@ class SceneManager {
     };
 
     update() {
+
+        if (PARAMS.DEBUG === true && this.game.click) {
+            console.log(floor((this.game.click.x + this.game.camera.x) / PARAMS.BLOCKWIDTH) + " " + floor((this.game.click.y + this.game.camera.y) / PARAMS.BLOCKWIDTH));
+            this.game.click = null;
+
+        }
+
         // decrement time if currently playing the main level
         if (this.playing) {
             this.game.timeRemaining -= this.game.clockTick;
@@ -207,15 +160,16 @@ class SceneManager {
         // set the left and right bounds on the camera
         this.x = this.game.gunner.x - midpointW;
         this.x = Math.max(0, this.x);
-        this.x = Math.min(10000, this.x); // todo: will need a bound for the right of the map...
+        this.x = Math.min(this.x, 25 * PARAMS.BLOCKWIDTH);
 
         // updates the y value only if the gunner is not jumping
         if (this.game.gunner.state != 2) {
             // todo: 
         }
 
-        this.y = this.game.gunner.y  - midpointW;
+        this.y = this.game.gunner.y - midpointW;
         this.y = Math.max(0, this.y);
+        // this.y = Math.min(this.y, 20 * PARAMS.BLOCKWIDTH);
         // todo: will need a bound for the bottom of the map...
 
         
